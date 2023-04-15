@@ -31,7 +31,7 @@ CREATE TABLE `character`(
     `age` DATE NOT NULL,
     `image` TEXT NOT NULL,
     `anime_id` INT NOT NULL,
-    `voice_artist_id` BIGINT NOT NULL,
+    `voice_artist_id` INT NOT NULL,
     PRIMARY KEY(`character_id`)
 );
 
@@ -66,7 +66,7 @@ CREATE TABLE `anime`(
 
 CREATE TABLE `list_item`(
     `user_id` INT NOT NULL,
-    `type` ENUM('') NOT NULL,
+    `type` ENUM('CURRENT','COMPLETED','ON_HOLD','DROPPED','PLAN_TO_WATCH') NOT NULL,
     `anime_id` INT NOT NULL,
     PRIMARY KEY (`user_id`,`anime_id`)
 );
