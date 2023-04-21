@@ -93,7 +93,6 @@ CREATE TABLE `list_item`(
     PRIMARY KEY(`user_id`,`anime_id`)
 );
 
-
 ALTER TABLE
     `anime` ADD CONSTRAINT `anime_studio_id_foreign` FOREIGN KEY(`studio_id`) REFERENCES `studio`(`studio_id`);
 ALTER TABLE
