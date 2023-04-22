@@ -145,7 +145,7 @@ async function seedCharacterDetails() {
     [animeID] = await connection.query("SELECT anime_id FROM anime ORDER BY `rank`");
     animeID = animeID.map((id) => id.anime_id);
 
-    for (let i = 0; i < animeID.length; i++) {
+    for (let i = 0; i < 40; i++) {
         let [has_character_data] = await connection.query("SELECT has_character_data FROM anime WHERE anime_id = ?", [
             animeID[i],
         ]);
