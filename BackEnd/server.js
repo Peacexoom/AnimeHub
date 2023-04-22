@@ -9,13 +9,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "patelmoon",
-    connectionLimit: 10000,
-    database: "anime_hub",
-});
+const connectToDB = async () => {
+    let db = await mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "patelmoon",
+        connectionLimit: 10000,
+        database: "anime_hub",
+    });
+    console.log('Connected to DB');
+    return db;
+};
+
+connectToDB();
 
 app.post("/signup", (req, res) => {
     const sql = "INSERT INTO user(name,email,password_hash,created_at,is_admin) VALUES (?,?,?,curdate(),0)";
@@ -104,7 +110,7 @@ app.post("/user/:user_id", async (req, res) => {
 app.get("/user/:user_id/list", async (req,res) => {
     let {user_id} = req.params;
     let [result] = await db.query("SELECT * FROM (SELECT * FROM (SELECT * FROM `user` WHERE user_id = ?) INNER JOIN list_item ON `user`.user_id = list_item.user_id) INNER JOIN anime ON list_item.anime_id=anime.anime_id",[user_id])
-    
+
 })
 
 app.use((err, req, res, next) => {
