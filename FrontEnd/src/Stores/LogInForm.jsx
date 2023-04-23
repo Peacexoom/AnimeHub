@@ -7,6 +7,7 @@ import React, { useState , useContext} from "react";
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./LoginValidation";
+import config from '../config.js';
 
 const LogInFrom = () => {
   const [values, setValues] = useState({
@@ -28,13 +29,14 @@ const LogInFrom = () => {
     setErrors(err);
     if (err.email === "" && err.password === "") {
       axios
-        .post("http://localhost:8081/login", values)
+        .post(`${config.ip}/login`, values)
         .then((res) => {
+          console.log(res.data)
           if (res.data.errors) {
             setBackendError(res.data.errors);
           } else {
             setBackendError([]);
-            if (res.data === "Success") {
+            if (res.data.success) {
               navigate("/genres");
             } else {
               alert("No record existed");

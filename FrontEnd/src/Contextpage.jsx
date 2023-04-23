@@ -10,7 +10,7 @@ import { json, useNavigate } from "react-router-dom";
 const Contextpage = createContext({
   header: '',
 });
-const IP = "192.168.77.99:5000";
+const IP = "10.42.0.137:5000";
 
 export function AnimeProvider({ children }) {
 
@@ -23,7 +23,7 @@ export function AnimeProvider({ children }) {
   const [genres, setGenres] = useState([])
   const [loader, setLoader] = useState(true);
   const [backgenre, setBackGenre] = useState(false);
-  // const [user, setUser] = useAuthState(auth)//=======> firebase custom hooks state
+  // const [user, setUser] = useAuthState(auth)
   // const navigate = useNavigate();
 
   // const APIKEY = import.meta.env.VITE_API_KEY;
@@ -137,7 +137,8 @@ export function AnimeProvider({ children }) {
         GetFavorite,
       
         // GoogleLogin,
-        // user
+        // user,
+        // setUser
       }}
     >
       {children}
