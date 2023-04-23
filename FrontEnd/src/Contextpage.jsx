@@ -126,7 +126,6 @@ export function AnimeProvider({ children }) {
     setHeader("Anime Movies")
   }
 
-  // creat local storage
   const GetFavorite = () => {
     setLoader(false)
     setHeader("Your WatchList")
@@ -193,8 +192,6 @@ export function AnimeProvider({ children }) {
         GetFavorite,
       
         // GoogleLogin,
-        // user,
-        // setUser
       }}
     >
       {children}
