@@ -17,7 +17,10 @@ export function AnimeProvider({ children }) {
   const [header, setHeader] = useState("Trending");
   const [animes, setAnimes] = useState([]);
   const [trending, setTrending] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
+  const [ongoing, setOngoing] = useState([]);
+  const [toprated, setToprated] = useState([]);
+  const [newest, setNewest] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [activegenre, setActiveGenre] = useState(28);
   const [genres, setGenres] = useState([])
@@ -67,25 +70,58 @@ export function AnimeProvider({ children }) {
 
   const fetchTrending = async () => {
     let data = await fetch(
-      `http://${IP}/anime/popular/30`
+      `http://${IP}/anime/popular/32`
     );
     data = await data.json();
     console.log(data);
     const trend = data;
     setTrending(trend.data);
     setLoader(false)
-    setHeader("Trending Animes")
+    setHeader("Popular Animes")
   }
 
-  const fetchUpcoming = async () => {
+  const fetchOngoing = async () => {
     let data = await fetch(
-      `http://${IP}/anime/popular/5`
+      `http://${IP}/anime/ongoing/32`
     );
     data = await data.json();
-    const upc = data;
-    setUpcoming(upc.data);
+    const on_going = data;
+    setOngoing(on_going.data);
     setLoader(false)
-    setHeader("Upcoming Animes")
+    setHeader("Ongoing Animes")
+  }
+
+  const fetchToprated = async () => {
+    let data = await fetch(
+      `http://${IP}/anime/top_rated/32`
+      );
+      data = await data.json();
+      const top_rated = data;
+      setToprated(top_rated.data);
+      setLoader(false)
+      setHeader("Top Rated Animes")
+    }
+
+    const fetchNewest = async () => {
+      let data = await fetch(
+        `http://${IP}/anime/newest/32`
+      );
+      data = await data.json();
+      const new_est = data;
+      setNewest(new_est.data);
+      setLoader(false)
+      setHeader("Newest Animes")
+    }
+
+  const fetchMovies = async () => {
+    let data = await fetch(
+      `http://${IP}/anime/movies/32`
+    );
+    data = await data.json();
+    const mov_ies = data;
+    setMovies(mov_ies.data);
+    setLoader(false)
+    setHeader("Anime Movies")
   }
 
   // creat local storage
@@ -132,8 +168,14 @@ export function AnimeProvider({ children }) {
         setLoader,
         fetchTrending,
         trending,
-        fetchUpcoming,
-        upcoming,
+        fetchOngoing,
+        ongoing,
+        fetchToprated,
+        toprated,
+        fetchNewest,
+        newest,
+        fetchMovies,
+        movies,
         GetFavorite,
       
         // GoogleLogin,

@@ -33,14 +33,20 @@ function Navbar() {
                         <h1 className=" text-white font-bold text-2xl text-center">AnimeHub</h1>
                     </Link>
                 </motion.div>
-                
+
                 <ul className="text-white font-semibold text-[16px] text-center px-5">
 
                     <Link to="/"><li className={`${header == "Genres" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600`} onClick={() => setActivemobile(!activemobile)}>Genres</li></Link>
 
-                    <Link to="/trending"><li className={`${header == "Trending Animes" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Trending</li></Link>
+                    <Link to="/trending"><li className={`${header == "Trending Animes" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Popular</li></Link>
 
-                    <Link to="/upcoming"><li className={`${header == "Upcoming Animes" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Upcoming</li></Link>
+                    <Link to="/ongoing"><li className={`${header == "Ongoing" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Ongoing</li></Link>
+
+                    <Link to="/toprated"><li className={`${header == "Top Rated" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Top Rated</li></Link>
+
+                    <Link to="/newest"><li className={`${header == "Newest" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Newest</li></Link>
+
+                    <Link to="/movies"><li className={`${header == "Movies" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Movies</li></Link>
 
                     <Link to="/favorite"><li className={`${header == "Favorite Animes" ? 'bg-blue-500/20 border-blue-600' : 'bg-gray-500/20 border-black'} p-2 my-2  hover:bg-blue-500/20 rounded-[5px] border-2 hover:border-blue-600 `} onClick={() => setActivemobile(!activemobile)}>Favorites</li></Link>
                 </ul>

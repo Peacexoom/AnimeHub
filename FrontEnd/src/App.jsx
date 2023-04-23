@@ -5,7 +5,10 @@ import { Detail } from './components/Detail';
 import Navbar from './components/Navbar'
 import Container from './pages/Container'
 import Trending from './pages/Trending';
-import Upcoming from './pages/Upcoming';
+import Ongoing from './pages/Ongoing';
+import Toprated from './pages/Toprated';
+import Newest from './pages/Newest';
+import Movies from './pages/Movies';
 import Favorite from './pages/Favoritepage';
 import { AnimeProvider } from "./Contextpage";
 import { ToastContainer } from 'react-toastify';
@@ -40,7 +43,10 @@ function App() {
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/genres' element={<Container/>}/>
           <Route path='/trending' element={<Trending />} />
-          <Route path='/upcoming' element={<Upcoming />} />
+          <Route path='/ongoing' element={<Ongoing />} />
+          <Route path='/toprated' element={<Toprated />} />
+          <Route path='/newest' element={<Newest />} />
+          <Route path='/movies' element={<Movies />} />
           <Route path='/animedetail/:id' element={<Detail />} />
           <Route path="/favorite" element={<Favorite />} />
         </Routes>

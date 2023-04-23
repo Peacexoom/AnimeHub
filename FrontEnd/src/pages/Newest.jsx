@@ -6,21 +6,21 @@ import Header from '../components/Header';
 import { Pagebtn } from '../components/Pagebtn';
 import { Helmet } from 'react-helmet';
 
-function Upcoming() {
+function Newest() {
 
-  const { loader,setPage, page, fetchUpcoming, upcoming } = useContext(Contextpage);
+  const { loader, page, fetchNewest, newest } = useContext(Contextpage);
     
     useEffect(() => {
-        fetchUpcoming();
+        fetchNewest();
     }, [page])
 
 
   return (
       <>
-        <Helmet>
-          <title>BlueBird Animes | Upcoming animes</title>
-          </Helmet>
-
+          <Helmet>
+          <title>AnimeHub | Newest</title>
+        </Helmet>
+          
         <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
             <Header />
             <motion.div
@@ -30,8 +30,8 @@ function Upcoming() {
                     {
                         loader ?  <span className="loader m-10"></span>:
                             <>
-                                {upcoming?.map((upc) => (
-                                    <Animecard key={upc.id} anime={upc} />
+                                {newest?.map((new_est) => (
+                                    <Animecard key={new_est.id} anime={new_est} />
                                 ))}
                             </>
                     }
@@ -44,4 +44,4 @@ function Upcoming() {
   )
 }
 
-export default Upcoming
+export default Newest
