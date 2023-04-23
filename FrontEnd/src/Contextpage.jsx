@@ -14,7 +14,8 @@ const Contextpage = createContext({
 const IP = config.ip;
 
 export function AnimeProvider({ children }) {
-
+  const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [header, setHeader] = useState("Trending");
   const [animes, setAnimes] = useState([]);
   const [trending, setTrending] = useState([]);
@@ -129,7 +130,14 @@ export function AnimeProvider({ children }) {
     setLoader(false)
     setHeader("Your WatchList")
   }
-      
+
+  const logout = () => {
+    if(isLoggedIn) {
+      localStorage.removeItem("user");
+      setIsLoggedIn(false);
+      setUser(0);
+    }
+  }
 
   //<========= firebase Google Authentication ========>
   // const googleProvider = new GoogleAuthProvider();// =====> google auth provide
@@ -149,6 +157,11 @@ export function AnimeProvider({ children }) {
   return (
     <Contextpage.Provider
       value={{
+        user,
+        setUser,
+        isLoggedIn,
+        setIsLoggedIn,
+        logout,
         fetchGenre,
         genres,
         setGenres,

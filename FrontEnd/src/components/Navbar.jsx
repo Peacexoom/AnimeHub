@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import Contextpage from '../Contextpage';
 import { motion } from "framer-motion";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
-// import User from '../assets/images/User.jpg';
+// import User from '../assets/images/User.jpg';   
 // import { auth } from '../../firebase';
 // import { toast } from "react-toastify";
 
 function Navbar() {
-
-    const { header, user } = useContext(Contextpage);
+    const { header, user, isLoggedIn, logout } = useContext(Contextpage);
     const [activemobile, setActivemobile] = useState(false);
 
     // console.log(user)
@@ -54,13 +53,13 @@ function Navbar() {
                 {/* Loginsection */}
 
                 <div className="absolute bottom-0 w-full p-5 md:p-2 text-white">
-                    {user ? <>
-                        <div className="w-full bg-gray-900 px-5 py-2 gap-4 rounded-xl flex items-center font-semibold border-2 border-blue-100/10">
-                            <img src={user.photoURL == null ? User : user.photoURL} alt="user" className="h-10 rounded-full" />
-                            <h1>{user.displayName}</h1>
+                    {isLoggedIn ? <>
+                        <div className="w-full justify-center bg-gray-900 px-5 py-2 gap-4 rounded-xl flex font-semibold border-2 border-blue-100/10">
+                            {/* <img src={user?.photoURL == null ? "User" : user?.photoURL} alt="user" className="h-10 rounded-full" /> */}
+                            <h1 className="text-center">Hi, {user?.name}</h1>
                         </div>
 
-                        <div className="cursor-pointer bg-red-500 flex justify-center items-center p-2 rounded-xl mt-2" onClick={() => auth.signOut(toast.error("Logout successfully"))}>
+                        <div className="cursor-pointer bg-red-500 flex justify-center items-center p-2 rounded-xl mt-2" onClick={logout}>
                             <h1>Logout</h1>
                         </div>
                     </>
