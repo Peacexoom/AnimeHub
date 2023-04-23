@@ -48,6 +48,7 @@ app.get("/", (req, res) => {
     return res.send("HELLO");
 });
 
+// signup api
 app.post("/signup", async (req, res, next) => {
     try {
         console.log(req.body);
@@ -69,6 +70,7 @@ app.post("/signup", async (req, res, next) => {
     }
 });
 
+// login api
 app.post(
     "/login",
     [
@@ -90,6 +92,7 @@ app.post(
     }
 );
 
+// get anime section wise
 app.get("/anime/:section/:limit", async (req, res) => {
     let { section, limit } = req.params;
     limit = parseInt(limit);
@@ -126,6 +129,7 @@ app.get("/anime/:section/:limit", async (req, res) => {
     }
 });
 
+// get anime list by filters
 app.get("/anime/filter", async (req, res,next) => {
     try {
         let selectConditionString = "";
@@ -151,6 +155,7 @@ app.get("/anime/filter", async (req, res,next) => {
     }
 });
 
+// get anime details
 app.get("/anime/:anime_id", async (req, res, next) => {
     let { anime_id } = req.params;
     anime_id = parseInt(anime_id);
@@ -176,6 +181,7 @@ app.get("/anime/:anime_id", async (req, res, next) => {
     }
 });
 
+// get user details
 app.get("/user/:user_id", async (req, res) => {
     let { user_id } = req.params;
     let [result] = await db.query("SELECT user_id,`name`,email,created_at FROM `user` WHERE user_id = ?", [user_id]);
@@ -184,6 +190,7 @@ app.get("/user/:user_id", async (req, res) => {
     else return res.status(404).json({ success: false, msg: "User not found" });
 });
 
+// read user watchlist
 app.get("/user/:user_id/list", async (req, res, next) => {
     let { user_id } = req.params;
     try {
@@ -209,6 +216,7 @@ app.get("/user/:user_id/list", async (req, res, next) => {
     }
 });
 
+// add anime to watchlist
 app.post("/user/:user_id/list/add", async (req, res, next) => {
     try {
         let { user_id } = req.params;
@@ -237,6 +245,7 @@ app.post("/user/:user_id/list/add", async (req, res, next) => {
     }
 });
 
+// update anime status in watchlist
 app.post("/user/:user_id/list/update", async (req, res, next) => {
     try {
         const status_enum = ["CURRENT", "COMPLETED", "ON_HOLD", "DROPPED", "PLAN_TO_WATCH"];
@@ -272,6 +281,7 @@ app.post("/user/:user_id/list/update", async (req, res, next) => {
     }
 });
 
+// delete anime from watchlist
 app.delete("/user/:user_id/list/delete", async (req, res, next) => {
     try {
         let { user_id } = req.params;
@@ -299,6 +309,7 @@ app.delete("/user/:user_id/list/delete", async (req, res, next) => {
     }
 });
 
+// generic error handler
 app.use((err, req, res, next) => {
     return res.status(500).json({ success: false, error: err });
 });
