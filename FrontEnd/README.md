@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# BlueBird-Movies
+BlueBird-Movies is a React-based movie website that allows users to search for movies by title, sort them by genre, view trending and upcoming movies, and bookmark their favorite movies. The website is designed to be user-friendly and visually appealing.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![background](https://user-images.githubusercontent.com/87109400/231843668-00e0d9aa-8447-4148-8a3a-0b68135c0795.png)
 
-## Available Scripts
+# 🍿 Features 
 
-In the project directory, you can run:
+- Search movies: users can search for movies by title
+- Genre-wise display: movies can be sorted by genre
+- Trending Movies: displays a section for trending movies
+- Upcoming movies: displays a section for upcoming movies
+- Movie Details: users can view detailed information about each movie
+- Bookmark Movies: users can bookmark their favorite movies for later viewing
+- Google Authentication: users can sign in using their Google account
 
-### `npm start`
+# 🍿 Technology
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+BlueBird-Movies is built using the following technologies:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- ReactJS
+- TMDB API
+- Firebase Google Authentication
+- Framer Motion
 
-### `npm test`
+# 🍿 How to Run the Website on Your System
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Step 1: Download and Extract the Code
 
-### `npm run build`
+Firstly, download the entire website code and extract the ZIP file to a folder on your local system.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Step 2: Obtain the TMDB Movies API Key and Firebase Configuration
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Before starting the website, you will need to obtain the TMDB Movies API key and Firebase configuration. Follow these steps to obtain them and add them to your `.env` file.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### ▶️ Get TMDB API Key 
 
-### `npm run eject`
+- Go to https://www.themoviedb.org/ and log in.
+- Click on your user profile picture in the navigation bar, and select "Settings".
+- In the settings, select "API" and generate an API key.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### ▶️ Firebase Setup 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Note that Firebase is only required for Google authentication. If you are not using Google authentication in your application, you can skip this step.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Go to the Firebase Console and create a new app.
+- After creating the app, build a web app by clicking "Add App" and following the instructions.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![Firebase Add App Screenshot](https://user-images.githubusercontent.com/87109400/231569204-445d8007-fe75-4012-a21b-a71f4f4bc697.png)
 
-## Learn More
+![Firebase Build App Screenshot](https://user-images.githubusercontent.com/87109400/231568774-1ea09ada-34b8-4035-80d4-90ac79c1c8ed.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Copy the configuration information provided in the green line, and paste it into the `.env` file:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![image](https://user-images.githubusercontent.com/87109400/231570250-9256c1bc-6669-423a-8b95-06d9577485a0.png)
 
-### Code Splitting
+- Next, to activate Google authentication in Firebase, go to **Build > Authentication** and enable Google authentication.
+- To use Google authentication in localhost, add your localhost/127.0.0.1 as an Authorized Domain at **Build > Authentication > Settings > Authorized Domains** and add localhost or 127.0.0.1 to this section.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![image](https://user-images.githubusercontent.com/87109400/231575419-ca703ebd-5380-45b6-8afe-33b9c1af778e.png)
 
-### Analyzing the Bundle Size
+## Step 3: Run the Website
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Open your code editor (such as VS Code) and navigate to the project directory. Then, open a terminal and run the following command:
 
-### Making a Progressive Web App
+```bash
+npm start
+```
+This will start the application. Open a web browser and navigate to http://localhost:3000 to access the website.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Note: Ensure that you have carefully added the TMDB API key and Firebase authentication configuration to your .env file. If the .env file is not working, add all the API keys and configuration manually.
 
-### Advanced Configuration
+# 🍿 Demo 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Check out our live demo at https://bluebirdmovies.netlify.app/ 
+ 
+- Youtube video : https://www.youtube.com/watch?v=mGqOOtEGmJc.
