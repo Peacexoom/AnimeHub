@@ -125,7 +125,6 @@ export function AnimeProvider({ children }) {
     setHeader("Anime Movies")
   }
 
-  // creat local storage
   const GetFavorite = () => {
     setLoader(false)
     setHeader("Your WatchList")

@@ -9,6 +9,24 @@ function Favoritepage() {
 
     // const { loader, GetFavorite } = useContext(Contextpage);
     // const [localStorageData, setLocalStorageData] = useState([]);
+    const [anime_id, setAnimeId] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+      
+        // Make the API call to add the anime details
+        const response = await fetch(`/user/${user_id}/list`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ anime_id }),
+        });
+      
+        // Handle the response from the API
+        const data = await response.json();
+        console.log(data);
+      };
 
     // useEffect(() => {
     //     GetFavorite();
