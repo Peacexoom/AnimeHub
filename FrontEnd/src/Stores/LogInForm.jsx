@@ -11,6 +11,7 @@ import config from '../config.js';
 import Home from "../Home";
 
 const LogInFrom = () => {
+  const {setIsLoggedIn} = useContext(Contextpage);
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -40,7 +41,7 @@ const LogInFrom = () => {
             setBackendError([]);
             if (res.data.success) {
               localStorage.setItem('user',JSON.stringify(res.data.data));
-              navigate("/home");
+              setIsLoggedIn(true);
             } else {
               alert("No record existed");
             }
@@ -50,9 +51,6 @@ const LogInFrom = () => {
     }
   };
   const {GoogleLogin} = useContext(Contextpage); 
-  if(JSON.parse(localStorage.getItem("user"))) {
-    navigate("/trending")
-  }
   return (
     <div
       className="border-2 border-white/30 p-5 bg-[#757575] flex justify-center items-center gap-5 h-96 rounded-2xl cursor-pointer "
@@ -66,7 +64,7 @@ const LogInFrom = () => {
           ) : (
             <span></span>
           )}
-          <form action="" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="email" className="mr-8">
                 <strong>Email</strong>

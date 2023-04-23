@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2/promise");
 const cors = require("cors");
+require("dotenv").config();
 // const morgan = require("morgan");
 const { check, validationResult } = require("express-validator");
 const port = 5000;
@@ -34,7 +35,7 @@ const connectToDB = async () => {
     db = await mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "Solanki@11",
+        password: process.env.PASSWORD,
         connectionLimit: 10000,
         database: "anime_hub",
     });

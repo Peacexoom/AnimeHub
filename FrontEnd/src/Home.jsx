@@ -6,7 +6,7 @@ import LogInForm from './Stores/LogInForm';
 import Navbar from './components/Navbar'
 import Container from './pages/Container'
 import Trending from './pages/Trending';
-import Upcoming from './pages/Upcoming';
+// import Upcoming from './pages/Upcoming';
 import Favorite from './pages/Favoritepage';
 import { AnimeProvider } from "./Contextpage";
 import { ToastContainer } from 'react-toastify';
