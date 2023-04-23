@@ -192,8 +192,6 @@ export function AnimeProvider({ children }) {
         GetFavorite,
       
         // GoogleLogin,
-        // user,
-        // setUser
       }}
     >
       {children}

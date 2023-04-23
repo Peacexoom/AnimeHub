@@ -7,31 +7,44 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import Contextpage from '../Contextpage';
+import axios from 'axios';
+import config from '../config';
+
+const IP = config.ip;
 
 function Animecard({ anime }) {
     const { user } = useContext(Contextpage);
 
     const [isBookmarked, setIsBookmarked] = useState(null);
 
-    useEffect(() => {
-        if (localStorage.getItem(anime.id)) {
-            setIsBookmarked(true);
-        } else {
-            setIsBookmarked(false);
-        }
-    }, [anime.id]);
+    // useEffect(() => {
+    //     if (localStorage.getItem(anime.id)) {
+    //         setIsBookmarked(true);
+    //     } else {
+    //         setIsBookmarked(false);
+    //     }
+    // }, [anime.id]);
 
     const BookmarkAnime = () => {
-        if (!user) {
-            toast.info("To bookmark this anime, please log in.");
-        } else {
-            setIsBookmarked(!isBookmarked)
-            if (isBookmarked) {
-                localStorage.removeItem(anime.id);
-            } else {
-                localStorage.setItem(anime.id, JSON.stringify(anime));
-            }
-        }
+        // if (!user) {
+        //     toast.info("To bookmark this anime, please log in.");
+        // } else {
+        axios.post(`${IP}/user/${user.user_id}/list/add`, {
+                anime_id: `${anime.anime_id}`
+            })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        // setIsBookmarked(!isBookmarked)
+        //     if (isBookmarked) {
+        //         localStorage.removeItem(anime.id);
+        //     } else {
+        //         localStorage.setItem(anime.id, JSON.stringify(anime));
+        //     }
+        // }
     }
 
     return (
