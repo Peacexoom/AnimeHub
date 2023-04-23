@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { json, useNavigate } from "react-router-dom";
+import config from "./config";
 //=== google firebase import start ===
 // import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 // import { auth } from '../firebase';
@@ -10,7 +11,7 @@ import { json, useNavigate } from "react-router-dom";
 const Contextpage = createContext({
   header: '',
 });
-const IP = "10.42.0.137:5000";
+const IP = config.ip;
 
 export function AnimeProvider({ children }) {
 
@@ -37,7 +38,7 @@ export function AnimeProvider({ children }) {
 
   const filteredGenre = async () => {
     let data = await fetch(
-      `http://${IP}/anime/popular/50`
+      `${IP}/anime/popular/50`
     );
 
     data = await data.json();
@@ -50,7 +51,7 @@ export function AnimeProvider({ children }) {
 
   const fetchSearch = async (query) => {
     const data = await fetch(
-      `http://${IP}/anime/popular/5`
+      `${IP}/anime/popular/5`
     );
     const searchanimes = await data.json();
     setAnimes(searchanimes.results);
@@ -60,7 +61,7 @@ export function AnimeProvider({ children }) {
 
   const fetchGenre = async () => {
     let data = await fetch(
-      `http://${IP}/anime/popular/5`
+      `${IP}/anime/popular/5`
     );
     data = await data.json();
     console.log(data);
@@ -70,7 +71,7 @@ export function AnimeProvider({ children }) {
 
   const fetchTrending = async () => {
     let data = await fetch(
-      `http://${IP}/anime/popular/32`
+      `${IP}/anime/popular/32`
     );
     data = await data.json();
     console.log(data);
@@ -82,7 +83,7 @@ export function AnimeProvider({ children }) {
 
   const fetchOngoing = async () => {
     let data = await fetch(
-      `http://${IP}/anime/ongoing/32`
+      `${IP}/anime/ongoing/32`
     );
     data = await data.json();
     const on_going = data;
@@ -93,7 +94,7 @@ export function AnimeProvider({ children }) {
 
   const fetchToprated = async () => {
     let data = await fetch(
-      `http://${IP}/anime/top_rated/32`
+      `${IP}/anime/top_rated/32`
       );
       data = await data.json();
       const top_rated = data;
@@ -104,7 +105,7 @@ export function AnimeProvider({ children }) {
 
     const fetchNewest = async () => {
       let data = await fetch(
-        `http://${IP}/anime/newest/32`
+        `${IP}/anime/newest/32`
       );
       data = await data.json();
       const new_est = data;
@@ -115,7 +116,7 @@ export function AnimeProvider({ children }) {
 
   const fetchMovies = async () => {
     let data = await fetch(
-      `http://${IP}/anime/movies/32`
+      `${IP}/anime/movies/32`
     );
     data = await data.json();
     const mov_ies = data;
@@ -127,7 +128,7 @@ export function AnimeProvider({ children }) {
   // creat local storage
   const GetFavorite = () => {
     setLoader(false)
-    setHeader("Favorite Animes")
+    setHeader("Your WatchList")
   }
       
 

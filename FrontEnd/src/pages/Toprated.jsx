@@ -18,7 +18,7 @@ function Toprated() {
   return (
       <>
           <Helmet>
-          <title>BlueBird Animes | toprated</title>
+          <title>AnimeHub | Toprated</title>
         </Helmet>
           
         <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
