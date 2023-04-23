@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Validation from './SignupValidation';
 
 import axios from 'axios'
+import config from '../config'
 
 
 function Signup() {
@@ -22,7 +23,7 @@ function Signup() {
             event.preventDefault();        
             const err = Validation(values); setErrors(err);         
             if(err.name === "" && err.email === "" && err.password === "") {            
-            axios.post('http://localhost:8081/signup', values).then(res => {                
+            axios.post(`${config.ip}/signup`, values).then(res => {                
                 navigate('/');
             }).catch(err => console.log(err));        
         }
@@ -55,4 +56,5 @@ function Signup() {
             </div>  
         )   
 }
+
 export default Signup
