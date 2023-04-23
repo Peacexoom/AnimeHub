@@ -56,7 +56,7 @@ function Animecard({ anime }) {
                     <h1 className='font-bold px-4 py-1 text-red-600 bg-zinc-900 rounded-full'>N/A</h1>}
             </div>
 
-            <Link to={`/animedetail/${anime.id}`} className='h-full w-full shadow absolute z-10'></Link>
+            <Link to={`/animedetail/${anime.anime_id}`} className='h-full w-full shadow absolute z-10'></Link>
 
             <div>
                 {anime.poster_path === null ? <img className='img object-cover' src={noimage} /> :

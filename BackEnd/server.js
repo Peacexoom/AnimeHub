@@ -195,7 +195,7 @@ app.get("/user/:user_id/list", async (req, res, next) => {
     let { user_id } = req.params;
     try {
         let [result] = await db.query(
-            "SELECT list_item.`type` as `status`,list_item.anime_id as anime_id,title,alt_title,img_link,num_episodes,rating,anime.`type`,`status`,season,score,`rank` FROM list_item INNER JOIN anime ON list_item.anime_id=anime.anime_id where list_item.user_id=1",
+            "SELECT list_item.`type` as `status`,list_item.anime_id as anime_id,title,alt_title,img_link,num_episodes,rating,anime.`type`,`status`,season,score,`rank` FROM list_item INNER JOIN anime ON list_item.anime_id=anime.anime_id where list_item.user_id=?",
             [user_id]
         );
         for (let i = 0; i < result.length; i++) {

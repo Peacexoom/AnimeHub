@@ -55,7 +55,7 @@ function App() {
             <Route path='/toprated' element={<Toprated />} />
             <Route path='/newest' element={<Newest />} />
             <Route path='/movies' element={<Movies />} />
-            <Route path='/animedetail/:id' element={<Detail />} />
+            <Route path='/animedetail/:anime_id' element={<Detail />} />
             <Route path="/favorite" element={<Favorite />} />
             <Route path='/login' element={<Navigate replace to="/trending" />} />
             <Route path='/signup' element={<Navigate replace to="/trending" />} />

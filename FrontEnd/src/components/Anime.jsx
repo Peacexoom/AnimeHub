@@ -8,11 +8,11 @@ import { Pagebtn } from './Pagebtn';
 
 function Animes() {
 
-    const {animes,filteredGenre, activegenre,loader,page} = useContext(Contextpage);
+    const { animes, filteredGenre, activegenre, loader, page } = useContext(Contextpage);
 
     useEffect(() => {
         filteredGenre();
-    }, [activegenre,page])
+    }, [activegenre, page])
 
     return (
 
@@ -24,7 +24,7 @@ function Animes() {
                 className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
                 <AnimatePresence>
                     {
-                        loader ?  <span className="loader m-10"></span>:
+                        loader ? <span className="loader m-10"></span> :
                             <>
                                 {animes?.map((anime) => (
                                     <Animecard key={anime.id} anime={anime} />
@@ -33,8 +33,8 @@ function Animes() {
                     }
                 </AnimatePresence>
             </motion.div>
-            <Pagebtn/>
-            
+            <Pagebtn />
+
         </div>
     )
 }
