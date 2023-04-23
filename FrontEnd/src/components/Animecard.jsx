@@ -49,11 +49,11 @@ function Animecard({ anime }) {
             <div className='absolute bottom-0 w-full flex justify-between items-end p-3 z-20'>
                 <h1 className='text-white text-xl font-semibold  break-normal break-words'>{anime.title || anime.name}</h1>
 
-                {anime.vote_average ?
-                    (anime.vote_average > 7 ? <h1 className='font-bold text-green-500 p-2 bg-zinc-900 rounded-full'>{anime.vote_average.toFixed(1)}</h1> :
-                        anime.vote_average > 5.5 ? <h1 className='font-bold text-orange-400 p-2 bg-zinc-900 rounded-full'>{anime.vote_average.toFixed(1)}</h1> :
-                            <h1 className='font-bold text-red-600 p-2 bg-zinc-900 rounded-full'>{anime.vote_average.toFixed(1)}</h1>) :
-                    <h1 className='font-bold text-red-600 p-2 bg-zinc-900 rounded-full'>N/A</h1>}
+                {anime.score ?
+                    (anime.score > 7 ? <h1 className='font-bold px-4 py-1 text-green-500 bg-zinc-900 rounded-full'>{anime.score.toFixed(1)}</h1> :
+                        anime.score > 5.5 ? <h1 className='font-bold px-4 py-1 text-orange-400 bg-zinc-900 rounded-full'>{anime.score.toFixed(1)}</h1> :
+                            <h1 className='font-bold px-4 py-1 text-red-600 bg-zinc-900 rounded-full'>{anime.score.toFixed(1)}</h1>) :
+                    <h1 className='font-bold px-4 py-1 text-red-600 bg-zinc-900 rounded-full'>N/A</h1>}
             </div>
 
             <Link to={`/animedetail/${anime.id}`} className='h-full w-full shadow absolute z-10'></Link>
