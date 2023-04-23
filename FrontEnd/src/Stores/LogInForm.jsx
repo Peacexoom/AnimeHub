@@ -11,7 +11,7 @@ import config from '../config.js';
 import Home from "../Home";
 
 const LogInFrom = () => {
-  const {setIsLoggedIn} = useContext(Contextpage);
+  const {setIsLoggedIn,setUser} = useContext(Contextpage);
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -42,6 +42,7 @@ const LogInFrom = () => {
             if (res.data.success) {
               localStorage.setItem('user',JSON.stringify(res.data.data));
               setIsLoggedIn(true);
+              setUser(res.data.data);
             } else {
               alert("No record existed");
             }
