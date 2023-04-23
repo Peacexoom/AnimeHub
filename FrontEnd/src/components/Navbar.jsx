@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import logo from "../assets/images/logo.png"
+import logo from "../assets/images/logo4.png"
 import { Link } from "react-router-dom";
 import Contextpage from '../Contextpage';
 import { motion } from "framer-motion";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
-import User from '../assets/images/User.jpg';
+// import User from '../assets/images/User.jpg';
 // import { auth } from '../../firebase';
 // import { toast } from "react-toastify";
 
@@ -29,8 +29,8 @@ function Navbar() {
                     transition={{ duration: 0.4 }}
                 >
                     <Link to="/" className="logo flex flex-col justify-center items-center m-7 gap-2" onClick={() => setActivemobile(!activemobile)}>
-                        <img src={logo} alt="logo" className="w-24" />
-                        <h1 className="text-gray-400/70 font-bold text-2xl text-center">Animes</h1>
+                        <img src={logo} alt="logo" className=" w" />
+                        <h1 className=" text-white font-bold text-2xl text-center">AnimeHub</h1>
                     </Link>
                 </motion.div>
                 
