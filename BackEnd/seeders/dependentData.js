@@ -5,11 +5,9 @@ const fs = require("fs");
 let { character_ids } = require("./anime_id.json");
 const path = require("path");
 
-console.log(character_ids);
-
 process.on("SIGINT", (evt) => {
     let data = JSON.stringify({ character_ids: character_ids });
-    fs.writeFileSync("./anime_id.json", data, (err) => {
+    fs.writeFileSync(path.join(__dirname,"anime_id.json"), data, (err) => {
         if (err) throw err;
     });
     console.log("Quitting...");
@@ -122,13 +120,19 @@ async function getCharactersID(animeID) {
     await page.goto(`https://myanimelist.net/anime/${animeID}/`);
 
     let characterIDs = [];
-    const char_url = await page.$eval("#horiznav_nav li:nth-child(2) a", (node) => node.href);
+    let char_url;
+    try {
+        char_url = await page.$eval("#horiznav_nav li:nth-child(2) a", (node) => node.href);
+    } catch(err) {
+        console.log(err);
+        throw err;
+    }
     await page.goto(char_url);
     characterIDs = await page.$$eval(".anime-character-container .js-anime-character-table .fw-n", (nodes) => {
         return nodes.map((node) => parseInt(node.href.slice(34).split("/")[0]));
     });
     await page.close();
-    console.log(characterIDs);
+    // console.log(characterIDs);
     return characterIDs;
 }
 
@@ -145,7 +149,7 @@ async function seedCharacterDetails() {
     [animeID] = await connection.query("SELECT anime_id FROM anime ORDER BY `rank`");
     animeID = animeID.map((id) => id.anime_id);
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < animeID.length ; i++) {
         let [has_character_data] = await connection.query("SELECT has_character_data FROM anime WHERE anime_id = ?", [
             animeID[i],
         ]);
@@ -154,7 +158,7 @@ async function seedCharacterDetails() {
         else {
             let characterIDs = await getCharactersID(animeID[i]);
             console.log("Fetching character ids of anime:", animeID[i]);
-            for (let j = 0; j < characterIDs.length; j++) {
+            for (let j = 0; j < (characterIDs.length > 20 ? 20 : characterIDs.length); j++) {
                 if (characterIDs[j] in character_ids) continue;
                 // let result = await connection.query("SELECT * FROM `character` WHERE character_id = ?", [
                 //     characterIDs[j],
