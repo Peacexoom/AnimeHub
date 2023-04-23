@@ -129,7 +129,7 @@ export function AnimeProvider({ children }) {
   // creat local storage
   const GetFavorite = () => {
     setLoader(false)
-    setHeader("Favorite Animes")
+    setHeader("Your WatchList")
   }
 
   const logout = () => {

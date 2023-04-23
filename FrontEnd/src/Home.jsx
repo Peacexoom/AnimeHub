@@ -37,7 +37,7 @@ function Home() {
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/genres' element={<Container/>}/>
           <Route path='/trending' element={<Trending />} />
-          <Route path='/upcoming' element={<Upcoming />} />
+          {/* <Route path='/upcoming' element={<Upcoming />} /> */}
           <Route path='/animedetail/:id' element={<Detail />} />
           <Route path="/favorite" element={<Favorite />} />
         </Switch>
