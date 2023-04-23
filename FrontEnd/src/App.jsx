@@ -1,6 +1,6 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import { Detail } from './components/Detail';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { Detail } from "./components/Detail";
 
 import Navbar from './components/Navbar'
 import Container from './pages/Container'
@@ -11,18 +11,20 @@ import Newest from './pages/Newest';
 import Movies from './pages/Movies';
 import Favorite from './pages/Favoritepage';
 import { AnimeProvider } from "./Contextpage";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Signup from './Stores/SignUp';
-// import Login from './Stores/Login';
-import LogInForm from './Stores/LogInForm';
-
+import Login from './Stores/Login';
+import LogInForm from "./Stores/LogInForm";
+import { Router } from "react-router-dom";
 
 function App() {
-
+  // if (!JSON.parse(localStorage.getItem("user"))) {
+  //   return <LogInForm />;
+  // }
   return (
     <AnimeProvider>
-       <ToastContainer
+      <ToastContainer
         position="bottom-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -34,7 +36,6 @@ function App() {
         pauseOnHover
         theme="dark"
       />
-
       <Navbar />
       <div className="md:ml-[15rem]">
         <Routes>
@@ -52,7 +53,7 @@ function App() {
         </Routes>
       </div>
     </AnimeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

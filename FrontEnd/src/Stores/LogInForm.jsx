@@ -8,6 +8,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./LoginValidation";
 import config from '../config.js';
+import Home from "../Home";
 
 const LogInFrom = () => {
   const [values, setValues] = useState({
@@ -25,6 +26,7 @@ const LogInFrom = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("logging in");
     const err = Validation(values);
     setErrors(err);
     if (err.email === "" && err.password === "") {
@@ -37,7 +39,8 @@ const LogInFrom = () => {
           } else {
             setBackendError([]);
             if (res.data.success) {
-              navigate("/genres");
+              localStorage.setItem('user',JSON.stringify(res.data.data));
+              navigate("/home");
             } else {
               alert("No record existed");
             }
@@ -47,6 +50,9 @@ const LogInFrom = () => {
     }
   };
   const {GoogleLogin} = useContext(Contextpage); 
+  if(JSON.parse(localStorage.getItem("user"))) {
+    navigate("/trending")
+  }
   return (
     <div
       className="border-2 border-white/30 p-5 bg-[#757575] flex justify-center items-center gap-5 h-96 rounded-2xl cursor-pointer "
@@ -92,7 +98,6 @@ const LogInFrom = () => {
               )}
             </div>
             <button type="submit" className="btn btn-success w-100 rounded-0 py-2 px-7 m-5 bg-teal-400 text-black font-semibold rounded-xl">
-              {" "}
               Log in
             </button>
             <Link
@@ -101,7 +106,7 @@ const LogInFrom = () => {
             >
               CreateAccount
             </Link>
-            <p>You are agree to aour terms and policies</p>
+            <p>You are agree to our terms and policies</p>
           </form>
           <div className="flex p-4 ">
           <FcGoogle className="text-3xl mr-5" />
