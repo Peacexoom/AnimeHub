@@ -130,7 +130,7 @@ app.get("/anime/:section/:limit", async (req, res) => {
 });
 
 // get anime list by filters
-app.get("/anime/filter", async (req, res,next) => {
+app.get("/anime/filter", async (req, res, next) => {
     try {
         let selectConditionString = "";
         let { genre } = req.query;
@@ -147,10 +147,36 @@ app.get("/anime/filter", async (req, res,next) => {
         // selectConditionString = genre;
         let animeIDs = await db.query("SELECT anime_id FROM anime_genre WHERE label = ?", [genre]);
         console.log(genre);
-        let data = (await db.query("SELECT * FROM anime INNER JOIN (SELECT * FROM anime_genre WHERE label=?) AS anime_genre ON anime.anime_id=anime_genre.anime_id ORDER BY `popularity`",[genre]))[0];
+        let data = (
+            await db.query(
+                "SELECT * FROM anime INNER JOIN (SELECT * FROM anime_genre WHERE label=?) AS anime_genre ON anime.anime_id=anime_genre.anime_id ORDER BY `popularity`",
+                [genre]
+            )
+        )[0];
         return res.json({ success: true, data });
     } catch (err) {
         console.log(err);
+        next(err);
+    }
+});
+
+app.get("/anime/search", async (req, res, next) => {
+    try {
+        let { search_query, limit,offset } = req.query;
+        limit = limit ? parseInt(limit) : 10;
+        offset = offset ? parseInt(offset) : 0;
+        if (search_query && search_query != "") {
+            let result = (
+                await db.query(
+                    "SELECT * FROM anime WHERE MATCH(title,alt_title) AGAINST (? IN NATURAL LANGUAGE MODE) limit ?,?",
+                    [search_query, offset, limit]
+                )
+            )[0];
+            res.json({ success: true, data: result });
+        } else {
+            throwError("Invalid query");
+        }
+    } catch (err) {
         next(err);
     }
 });
