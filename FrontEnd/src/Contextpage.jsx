@@ -42,20 +42,18 @@ export function AnimeProvider({ children }) {
       `${IP}/anime/popular/50`
     );
 
-    data = await data.json();
-    console.log(data);
-    const animes = data;
-    setAnimes(animes.data);
+    const animes = (await data.json()).data;
+    setAnimes(animes);
     setLoader(false);
     setHeader("Genres");
   };
 
   const fetchSearch = async (query) => {
     const data = await fetch(
-      `${IP}/anime/popular/5`
+      `${IP}/anime/search?search_query=${query}&limit=20`
     );
-    const searchanimes = await data.json();
-    setAnimes(searchanimes.results);
+    const searchanimes = (await data.json()).data;
+    setAnimes(searchanimes);
     setLoader(false);
     setHeader(`Results for "${query}"`);
   }
@@ -64,10 +62,10 @@ export function AnimeProvider({ children }) {
     let data = await fetch(
       `${IP}/anime/popular/5`
     );
-    data = await data.json();
+    data = (await data.json()).data;
     console.log(data);
     // const gen = data;
-    setGenres(data.data);
+    setGenres(data);
   }
 
   const fetchTrending = async () => {

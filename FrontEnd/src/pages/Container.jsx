@@ -5,7 +5,7 @@ import Searchbar from "../components/Searchbar";
 function Container() {
     return (
         <section>
-            <Searchbar />
+            {/* <Searchbar /> */}
             <Animes/>
         </section>
     )

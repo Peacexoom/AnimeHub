@@ -33,7 +33,6 @@ function Genre() {
                         className={activegenre === genre.id ? 'active px-4 py-2 m-2 text-[15px] text-white font-semibold rounded-3xl' : 'px-4 py-2 m-2 text-[15px] bg-slate-800 text-white font-semibold rounded-3xl'} key={genre.id}>
                         {genre.name}
                     </button>
-
                 ))
             };
             </div>

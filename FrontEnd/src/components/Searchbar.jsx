@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Contextpage from '../Contextpage';
+import {useNavigate} from "react-router-dom";
 
 function Searchbar() {
-  const { filteredGenre, fetchSearch, setBackGenre, setGenres } = useContext(Contextpage);
+  const navigate = useNavigate();
+  const { filteredGenre, fetchSearch} = useContext(Contextpage);
   const [value, setValue] = useState("");
   const onKeyUp = async (event) => {
     if (event.key === "Enter" && value !== "") {
@@ -13,8 +15,9 @@ function Searchbar() {
           filteredGenre();
         } else {
           const results = await fetchSearch(query);
-          setGenres(results);
-          setBackGenre(true);
+          // setGenres(results);
+          // setBackGenre(true);
+          navigate(`/search?search_query=${query}`);
         }
       } catch (error) {
         console.error("Search query failed: ", error);
@@ -29,8 +32,8 @@ function Searchbar() {
         <title>BlueBird Animes - Search</title>
       </Helmet>
 
-      <div className="w-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 h-[10rem] md:h-[12rem]">
-        <div className='h-full w-full bg-black/30 flex justify-center items-center'>
+      <div className="w-full bg-gradient-to-r from-fuchsia-500 to-cyan-500">
+        <div className='h-full w-full bg-black/30 flex justify-center items-center py-5'>
           <input
             type="search"
             name="searchpanel"

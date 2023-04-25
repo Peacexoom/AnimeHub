@@ -16,7 +16,7 @@ function Home() {
 
   return (
     <AnimeProvider>
-       <ToastContainer
+      <ToastContainer
         position="bottom-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -28,14 +28,13 @@ function Home() {
         pauseOnHover
         theme="dark"
       />
-
       <Navbar />
       <div className="md:ml-[15rem]">
         <Switch>
-          <Route path='/' element={<LogInForm/>}/>
-          <Route path='/login' element={<LogInForm/>}/>
-          <Route path='/signup' element={<Signup/>}/>
-          <Route path='/genres' element={<Container/>}/>
+          <Route path='/' element={<LogInForm />} />
+          <Route path='/login' element={<LogInForm />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/genres' element={<Container />} />
           <Route path='/trending' element={<Trending />} />
           {/* <Route path='/upcoming' element={<Upcoming />} /> */}
           <Route path='/animedetail/:id' element={<Detail />} />
