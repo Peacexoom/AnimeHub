@@ -2,16 +2,16 @@
 // import InputField from "./InputField";
 // import SubmitButton from "./SubmitButton";
 import axios from "axios";
-import Contextpage from '../Contextpage';
-import React, { useState , useContext} from "react";
-import { FcGoogle } from 'react-icons/fc';
+import Contextpage from "../Contextpage";
+import React, { useState, useContext } from "react";
+// import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./LoginValidation";
-import config from '../config.js';
-import Home from "../Home";
+import config from "../config.js";
+// import Home from "../Home";
 
 const LogInFrom = () => {
-  const {setIsLoggedIn,setUser} = useContext(Contextpage);
+  const { setIsLoggedIn, setUser } = useContext(Contextpage);
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -34,24 +34,28 @@ const LogInFrom = () => {
       axios
         .post(`${config.ip}/login`, values)
         .then((res) => {
-          console.log(res.data)
+          console.log(res.data);
           if (res.data.errors) {
             setBackendError(res.data.errors);
           } else {
             setBackendError([]);
             if (res.data.success) {
-              localStorage.setItem('user',JSON.stringify(res.data.data));
+              localStorage.setItem("user", JSON.stringify(res.data.data));
               setIsLoggedIn(true);
               setUser(res.data.data);
             } else {
-              alert("No record existed");
+              alert(res.data.msg);
+              
             }
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          console.log(err.msg); alert(err.response.data.error);
+        });
     }
   };
-  const {GoogleLogin} = useContext(Contextpage); 
+  const { GoogleLogin } = useContext(Contextpage);
   return (
     <div
       className="border-2 border-white/30 p-5 bg-[#757575] flex justify-center items-center gap-5 h-96 rounded-2xl cursor-pointer "
@@ -96,7 +100,10 @@ const LogInFrom = () => {
                 <span className="text-danger"> {errors.password}</span>
               )}
             </div>
-            <button type="submit" className="btn btn-success w-100 rounded-0 py-2 px-7 m-5 bg-teal-400 text-black font-semibold rounded-xl">
+            <button
+              type="submit"
+              className="btn btn-success w-100 rounded-0 py-2 px-7 m-5 bg-teal-400 text-black font-semibold rounded-xl"
+            >
               Log in
             </button>
             <Link
@@ -108,8 +115,8 @@ const LogInFrom = () => {
             <p>You are agree to our terms and policies</p>
           </form>
           <div className="flex p-4 ">
-          <FcGoogle className="text-3xl mr-5" />
-          <p className="text-white font-semibold">Sign in with Google</p>
+            {/* <FcGoogle className="text-3xl mr-5" />
+          <p className="text-white font-semibold">Sign in with Google</p> */}
           </div>
         </div>
       </div>

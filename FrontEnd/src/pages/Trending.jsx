@@ -32,7 +32,7 @@ function Trending() {
                     {
                         loader ? <span className="loader m-10"></span>:
                             <>
-                                {trending.map((trend) => (
+                                {trending?.map((trend) => (
                                     <Animecard key={trend.anime_id} anime={trend} />
                                 ))}
                             </>
