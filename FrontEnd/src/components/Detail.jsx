@@ -2,22 +2,19 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Contextpage from '../Contextpage';
 import { HiChevronLeft } from "react-icons/hi";
-import noimage from '../assets/images/animes.jpg'
-import { FaPlay } from "react-icons/fa";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import config from '../config';
 
 export const Detail = () => {
     // const APIKEY = import.meta.env.VITE_API_KEY;
 
-    const { loader, setLoader } = useContext(Contextpage);
+    const { setLoader } = useContext(Contextpage);
     const { anime_id } = useParams();
 
     const [animedet, setAnimedet] = useState();
-    const [castdata, setCastdata] = useState([]);
+    // const [castdata, setCastdata] = useState([]);
     // const [animegenres, setAnimegenres] = useState([]);
-    const [video, setVideo] = useState([]);
+    // const [video, setVideo] = useState([]);
 
     const fetchAnime = async () => {
         const data = await fetch(
@@ -27,7 +24,6 @@ export const Detail = () => {
         if (anime.start_date) anime.start_date = new Date(anime.start_date);
         if (anime.end_date) anime.end_date = new Date(anime.end_date);
         anime.season = anime.season.charAt(0) + anime.season.slice(1).toLowerCase();
-        console.log(anime);
         setAnimedet(anime);
         setLoader(false);
     };
@@ -69,7 +65,8 @@ export const Detail = () => {
                         <div className='relative h-auto md:h-[82vh] flex justify-center'>
                             <div className='h-full w-full shadowbackdrop absolute'></div>
                             <h1 className='text-white absolute bottom-0 p-10 text-2xl md:text-6xl font-bold text-center'></h1>
-                            {/* {animedet.backdrop_path === null ? <img src={noimage} className='h-full w-full' /> : <img src={"https://image.tmdb.org/t/p/original/" + animedet.backdrop_path} className='h-full w-full' />} */}
+                            {animedet.backdrop_path === null ? <img src={noimage} className='h-full w-full' /> : <img src={animedet.img_link} className='h-full' />}
+                            {/* <iframe className="h-full w-full bg-cover iframe js-fancybox-video video-unit promotion" href="https://www.youtube.com/embed/Jc-Uiz0y2d8?enablejsapi=1&amp;wmode=opaque&amp;autoplay=1" style={{backgroundImage:"url('https://i.ytimg.com/vi/Jc-Uiz0y2d8/mqdefault.jpg')"}} rel="gallery"></iframe> */}
                         </div>
 
                         {/* overview */}
@@ -86,9 +83,9 @@ export const Detail = () => {
                                 </div>
                                 {/* tag */}
                                 <div className='flex justify-center flex-wrap'>
-                                    {animedet.genres.map((genreLabel) => (
+                                    {animedet.genres.map((genreLabel, index) => (
                                         <>
-                                            <div key={genreLabel} className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2'>{genreLabel}</div>
+                                            <div key={index} className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2'>{genreLabel}</div>
                                         </>
                                     ))}
                                 </div>
