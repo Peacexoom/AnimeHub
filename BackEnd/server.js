@@ -197,7 +197,7 @@ app.get("/anime/search", async (req, res, next) => {
         if (search_query && search_query != "") {
             let result = (
                 await db.query(
-                    "SELECT anime.*,watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE MATCH(title,alt_title) AGAINST (? IN NATURAL LANGUAGE MODE) limit ?,?",
+                    "SELECT anime.*,watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE MATCH(title,alt_title) AGAINST (? IN NATURAL LANGUAGE MODE) ORDER BY `rank` limit ?,?",
                     [user_id, search_query, offset, limit]
                 )
             )[0];
