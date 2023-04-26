@@ -31,8 +31,8 @@ function Movies() {
                     {
                         loader ?  <span className="loader m-10"></span>:
                             <>
-                                {movies?.map((mov_ies) => (
-                                    <Animecard key={mov_ies.id} anime={mov_ies} />
+                                {movies?.map((movie) => (
+                                    <Animecard key={movie.anime_id} anime={movie} />
                                 ))}
                             </>
                     }

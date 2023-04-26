@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
-import { json, useNavigate } from "react-router-dom";
 import config from "./config";
+import axios from "axios";
 //=== google firebase import start ===
 // import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 // import { auth } from '../firebase';
@@ -24,10 +24,11 @@ export function AnimeProvider({ children }) {
   const [newest, setNewest] = useState([]);
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const [activegenre, setActiveGenre] = useState(28);
+  const [activegenre, setActiveGenre] = useState("All");
   const [genres, setGenres] = useState([])
   const [loader, setLoader] = useState(true);
   const [backgenre, setBackGenre] = useState(false);
+  const [genreAnimes, setGenreAnimes] = useState([])
   // const [user, setUser] = useAuthState(auth)
   // const navigate = useNavigate();
 
@@ -37,35 +38,38 @@ export function AnimeProvider({ children }) {
     setPage(1)
   }
 
-  const filteredGenre = async () => {
-    let data = await fetch(
-      `${IP}/anime/popular/50`
-    );
+  // const filteredGenre = async () => {
+  //   let data = await fetch(
+  //     `${IP}/anime/popular/50`, { headers: { 'user_id': user.user_id } }
+  //   );
 
-    const animes = (await data.json()).data;
-    setAnimes(animes);
-    setLoader(false);
-    setHeader("Genres");
-  };
+  //   const animes = (await data.json()).data;
+  //   setLoader(false);
+  //   setHeader("Genres");
+  // };
 
   const fetchSearch = async (query) => {
+    // setLoader(true);
+    console.log(query)
     const data = await fetch(
-      `${IP}/anime/search?search_query=${query}&limit=20`, { headers: { 'user_id': user.user_id } }
+      `${IP}/anime/search?search_query=${query}`, { headers: { 'user_id': user.user_id } }
     );
     const searchanimes = (await data.json()).data;
+    console.log(searchanimes)
     setAnimes(searchanimes);
     setLoader(false);
     setHeader(`Results for "${query}"`);
   }
 
   const fetchGenre = async () => {
-    let data = await fetch(
-      `${IP}/anime/popular/5`, { headers: { 'user_id': user.user_id } }
-    );
-    data = (await data.json()).data;
-    console.log(data);
-    // const gen = data;
-    setGenres(data);
+    if (genres?.length === 0) {
+      let data = await fetch(
+        `${IP}/genres`
+      );
+      data = (await data.json()).data;
+      localStorage.setItem("genres", JSON.stringify({ data }));
+      setGenres(data);
+    }
   }
 
   const fetchTrending = async () => {
@@ -73,7 +77,6 @@ export function AnimeProvider({ children }) {
       `${IP}/anime/popular/32`, { headers: { 'user_id': user.user_id } }
     );
     data = await data.json();
-    console.log(data);
     const trend = data;
     setTrending(trend.data);
     setLoader(false)
@@ -124,6 +127,16 @@ export function AnimeProvider({ children }) {
     setHeader("Anime Movies")
   }
 
+  const fetchGenreAnime = async (genre) => {
+    setLoader(true);
+    let animes = (await axios.get(`${IP}/anime/filter?genre=${genre}`, { headers: { 'user_id': user.user_id } })).data.data;
+    // let animes = await fetch(`${IP}/anime/filter?genre=${genre}`);
+    // animes = (await animes.json()).data;
+    setHeader("Genres")
+    setLoader(false);
+    setGenreAnimes(animes);
+  }
+
   const GetFavorite = () => {
     setLoader(false)
     setHeader("Your WatchList");
@@ -159,11 +172,11 @@ export function AnimeProvider({ children }) {
         setUser,
         isLoggedIn,
         setIsLoggedIn,
+        genreAnimes,
         logout,
         fetchGenre,
         genres,
         setGenres,
-        filteredGenre,
         header,
         setHeader,
         animes,
@@ -186,6 +199,7 @@ export function AnimeProvider({ children }) {
         fetchNewest,
         newest,
         fetchMovies,
+        fetchGenreAnime,
         movies,
         GetFavorite,
 

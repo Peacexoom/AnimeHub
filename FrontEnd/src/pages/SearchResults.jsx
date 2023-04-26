@@ -24,7 +24,6 @@ function SearchResults() {
           <Helmet>
           <title>Search results for {searchParams.toString().split('=')[1]}</title>
         </Helmet>
-        <div>{searchParams.values}</div>
         <Searchbar />
         <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
             <Header />
@@ -35,7 +34,7 @@ function SearchResults() {
                     {
                         loader ?  <span className="loader m-10"></span>:
                             <>
-                                {animes.map((anime) => (
+                                {animes?.map((anime) => (
                                     <Animecard key={anime.anime_id} anime={anime} />
                                 ))}
                             </>

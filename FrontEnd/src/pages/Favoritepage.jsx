@@ -66,7 +66,7 @@ function Favoritepage() {
                                     {
                                         watchlist.length === 0
                                             ? <p className="text-xl text-white">Watchlist is empty.</p>
-                                            : watchlist.map((anime, index) => (<Animecard key={index} anime={anime} />))
+                                            : watchlist.map((anime, index) => (<Animecard key={anime.anime_id} anime={anime} />))
                                     }
                                 </>
                         }

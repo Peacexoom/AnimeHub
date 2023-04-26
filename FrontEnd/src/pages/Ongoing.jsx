@@ -31,8 +31,8 @@ function Ongoing() {
                     {
                         loader ?  <span className="loader m-10"></span>:
                             <>
-                                {ongoing?.map((on_going) => (
-                                    <Animecard key={on_going.id} anime={on_going} />
+                                {ongoing?.map((anime) => (
+                                    <Animecard key={anime.anime_id} anime={anime} />
                                 ))}
                             </>
                     }

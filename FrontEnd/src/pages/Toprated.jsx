@@ -32,7 +32,7 @@ function Toprated() {
                         loader ?  <span className="loader m-10"></span>:
                             <>
                                 {toprated?.map((top_rated) => (
-                                    <Animecard key={top_rated.id} anime={top_rated} />
+                                    <Animecard key={top_rated.anime_id} anime={top_rated} />
                                 ))}
                             </>
                     }

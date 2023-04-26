@@ -8,17 +8,18 @@ import { Pagebtn } from './Pagebtn';
 
 function Animes() {
 
-    const { animes, filteredGenre, activegenre, loader, page } = useContext(Contextpage);
+    const { genreAnimes, fetchGenreAnime, activegenre, loader, page } = useContext(Contextpage);
 
     useEffect(() => {
-        filteredGenre();
+        console.log(activegenre)
+        fetchGenreAnime(activegenre);
     }, [activegenre, page])
 
     return (
 
         <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
-            <Genre />
             <Header />
+            <Genre />
             <motion.div
                 layout
                 className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
@@ -26,7 +27,7 @@ function Animes() {
                     {
                         loader ? <span className="loader m-10"></span> :
                             <>
-                                {animes?.map((anime) => (
+                                {genreAnimes?.map((anime) => (
                                     <Animecard key={anime.id} anime={anime} />
                                 ))}
                             </>

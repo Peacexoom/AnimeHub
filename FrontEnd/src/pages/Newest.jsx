@@ -31,8 +31,8 @@ function Newest() {
                     {
                         loader ?  <span className="loader m-10"></span>:
                             <>
-                                {newest?.map((new_est) => (
-                                    <Animecard key={new_est.id} anime={new_est} />
+                                {newest?.map((anime) => (
+                                    <Animecard key={anime.anime_id} anime={anime} />
                                 ))}
                             </>
                     }
