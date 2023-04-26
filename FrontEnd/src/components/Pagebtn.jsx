@@ -4,7 +4,6 @@ import Button from '../assets/Btn'
 // import { HiChevronUp } from "react-icons/hi";
 
 export const Pagebtn = () => {
-
     const { setPage, page } = useContext(Contextpage);
 
     return (

@@ -9,40 +9,40 @@ import Searchbar from '../components/Searchbar';
 
 function Toprated() {
 
-  const { loader, page, fetchToprated, toprated } = useContext(Contextpage);
-    
+    const { loader, page, fetchToprated, toprated } = useContext(Contextpage);
+
     useEffect(() => {
         fetchToprated();
     }, [page])
 
 
-  return (
-      <>
-          <Helmet>
-          <title>AnimeHub | Toprated</title>
-        </Helmet>
-        <Searchbar />
-        <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
-            <Header />
-            <motion.div
-                layout
-                className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
-                <AnimatePresence>
-                    {
-                        loader ?  <span className="loader m-10"></span>:
-                            <>
-                                {toprated?.map((top_rated) => (
-                                    <Animecard key={top_rated.anime_id} anime={top_rated} />
-                                ))}
-                            </>
-                    }
-                </AnimatePresence>
-            </motion.div>
-            <Pagebtn/>
-            
-        </div>
-      </>
-  )
+    return (
+        <>
+            <Helmet>
+                <title>AnimeHub | Toprated</title>
+            </Helmet>
+            <Searchbar />
+            <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
+                <Header />
+                <motion.div
+                    layout
+                    className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
+                    <AnimatePresence>
+                        {
+                            loader ? <span className="loader m-10"></span> :
+                                <>
+                                    {toprated?.map((top_rated) => (
+                                        <Animecard key={top_rated.anime_id} anime={top_rated} />
+                                    ))}
+                                </>
+                        }
+                    </AnimatePresence>
+                </motion.div>
+                <Pagebtn />
+
+            </div>
+        </>
+    )
 }
 
 export default Toprated
