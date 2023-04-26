@@ -29,7 +29,7 @@ function Searchbar() {
   return (
     <>
       <Helmet>
-        <title>BlueBird Animes - Search</title>
+        <title>AnimeHub</title>
       </Helmet>
 
       <div className="w-full bg-gradient-to-r from-fuchsia-500 to-cyan-500">
