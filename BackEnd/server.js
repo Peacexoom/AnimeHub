@@ -147,27 +147,36 @@ app.get("/anime/:section/:limit", async (req, res, next) => {
 // get anime list by filters
 app.get("/anime/filter", async (req, res, next) => {
     try {
-        let selectConditionString = "";
-        let { genre } = req.query;
-        // genre = genre.replace("_", " ");
-        let genreString = "";
+        let { user_id } = req.headers;
+        let { genre, limit } = req.query;
+        limit = limit || 20;
+        genre = genre.toUpperCase();
+
+        if (!user_id) throwError("No user_id received.");
+        if (!(await idExists(db, "user", "user_id", user_id))) throwError("User does not exist");
+
         if (genres.length === 0) {
             genres = (await db.query("SELECT label from genre"))[0].map((tuple) => tuple.label.toUpperCase());
         }
-        if (!genres.includes(genre.replace("_", " ").toUpperCase())) {
+        if (!genres.includes(genre.replace("_", " ").toUpperCase()) && genre != "ALL") {
             return res.json({ success: false, msg: "Invalid genre" });
         } else {
             genreString = `label=${genre.toUpperCase()}`;
         }
-        // selectConditionString = genre;
-        let animeIDs = await db.query("SELECT anime_id FROM anime_genre WHERE label = ?", [genre]);
-        console.log(genre);
-        let data = (
-            await db.query(
-                "SELECT * FROM anime INNER JOIN (SELECT * FROM anime_genre WHERE label=?) AS anime_genre ON anime.anime_id=anime_genre.anime_id ORDER BY `popularity`",
-                [genre]
-            )
-        )[0];
+        let data = [];
+        if (genre == "ALL") {
+            console.log("HEY");
+            data = (await db.query("SELECT anime.* FROM anime ORDER BY `popularity` limit ?", [limit]))[0];
+            console.log(data);
+        } else {
+            console.log("HERE");
+            data = (
+                await db.query(
+                    "SELECT genre_filter.*,watchlist.anime_id AS is_added FROM (SELECT anime.* FROM anime INNER JOIN (SELECT * FROM anime_genre WHERE label=?) AS anime_genre ON anime.anime_id=anime_genre.anime_id ORDER BY `popularity` limit ?) AS genre_filter LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON genre_filter.anime_id = watchlist.anime_id",
+                    [genre, limit, user_id]
+                )
+            )[0];
+        }
         return res.json({ success: true, data });
     } catch (err) {
         console.log(err);
@@ -192,6 +201,7 @@ app.get("/anime/search", async (req, res, next) => {
                     [user_id, search_query, offset, limit]
                 )
             )[0];
+            console.log(result);
             res.json({ success: true, data: result });
         } else {
             throwError("Invalid query");
@@ -225,6 +235,12 @@ app.get("/anime/:anime_id", async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+});
+
+// get all available genres
+app.get("/genres", async (req, res, next) => {
+    let result = (await db.query("SELECT label FROM genre"))[0].map((tuple) => tuple.label);
+    res.json({ success: true, data: result });
 });
 
 // get user details
@@ -261,6 +277,8 @@ app.get("/user/:user_id/list", async (req, res, next) => {
         next(err);
     }
 });
+
+app.get("");
 
 // add anime to watchlist
 app.post("/user/:user_id/list/add", async (req, res, next) => {
