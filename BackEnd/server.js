@@ -35,7 +35,7 @@ const connectToDB = async () => {
     db = await mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: process.env.PASSWORD,
+        password: "Solanki@11",
         connectionLimit: 10000,
         database: "anime_hub",
     });
