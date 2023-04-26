@@ -49,7 +49,7 @@ function App() {
 
         <div className="md:ml-[15rem]">
           <Routes>
-            <Route path='/' element={<Animes />} />
+            <Route path='/' element={<Navigate replace to="/trending" />} />
             <Route path='/trending' element={<Trending />} />
             <Route path='/genres' element={<Container />} />
             <Route path='/ongoing' element={<Ongoing />} />
