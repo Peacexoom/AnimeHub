@@ -2,22 +2,19 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Contextpage from '../Contextpage';
 import { HiChevronLeft } from "react-icons/hi";
-import noimage from '../assets/images/animes.jpg'
-import { FaPlay } from "react-icons/fa";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import config from '../config';
 
 export const Detail = () => {
     // const APIKEY = import.meta.env.VITE_API_KEY;
 
-    const { loader, setLoader } = useContext(Contextpage);
+    const { setLoader } = useContext(Contextpage);
     const { anime_id } = useParams();
 
     const [animedet, setAnimedet] = useState();
-    const [castdata, setCastdata] = useState([]);
+    // const [castdata, setCastdata] = useState([]);
     // const [animegenres, setAnimegenres] = useState([]);
-    const [video, setVideo] = useState([]);
+    // const [video, setVideo] = useState([]);
 
     const fetchAnime = async () => {
         const data = await fetch(
@@ -27,7 +24,6 @@ export const Detail = () => {
         if (anime.start_date) anime.start_date = new Date(anime.start_date);
         if (anime.end_date) anime.end_date = new Date(anime.end_date);
         anime.season = anime.season.charAt(0) + anime.season.slice(1).toLowerCase();
-        console.log(anime);
         setAnimedet(anime);
         setLoader(false);
     };
@@ -86,9 +82,9 @@ export const Detail = () => {
                                 </div>
                                 {/* tag */}
                                 <div className='flex justify-center flex-wrap'>
-                                    {animedet.genres.map((genreLabel) => (
+                                    {animedet.genres.map((genreLabel, index) => (
                                         <>
-                                            <div key={genreLabel} className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2'>{genreLabel}</div>
+                                            <div key={index} className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2'>{genreLabel}</div>
                                         </>
                                     ))}
                                 </div>
