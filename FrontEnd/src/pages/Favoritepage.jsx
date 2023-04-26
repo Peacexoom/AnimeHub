@@ -11,13 +11,11 @@ const IP = config.ip;
 function Favoritepage() {
 
     const { loader, user, GetFavorite } = useContext(Contextpage);
-    // const [localStorageData, setLocalStorageData] = useState([]);
-    // const [anime_id, setAnimeId] = useState('');
     const [watchlist, setWatchlist] = useState([]);
 
     useEffect(() => {
         GetFavorite();
-        fetch(`${IP}/user/${user.user_id}/list`)
+        fetch(`${IP}/user/${user.user_id}/list`, { headers: { 'user_id': user.user_id } })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -29,7 +27,7 @@ function Favoritepage() {
 
     // const handleSubmit = async (event) => {
     //     event.preventDefault();
-      
+
     //     // Make the API call to add the anime details
     //     const response = await fetch(`/user/${user_id}/list`, {
     //       method: 'POST',
@@ -38,7 +36,7 @@ function Favoritepage() {
     //       },
     //       body: JSON.stringify({ anime_id }),
     //     });
-      
+
     //     // Handle the response from the API
     //     const data = await response.json();
     //     console.log(data);
@@ -51,31 +49,31 @@ function Favoritepage() {
     // }, []);
 
     return (
-                <>
-                <Helmet>
-                  <title>AnimeHub | WatchList</title>
-                </Helmet>
-                  
-                  <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
-                      <Header />
-                      <motion.div
-                          layout
-                          className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
-                          <AnimatePresence>
-                              {
-                                  loader ? <span className="loader m-10"></span> :
-                                  <>
-                                      {
-                                          watchlist.length === 0
-                                              ? <p className="text-xl text-white">Watchlist is empty.</p>
-                                              : watchlist.map((anime, index) => (<Animecard key={index} anime={anime} />))
-                                      }
-                                  </>
-                              }
-                          </AnimatePresence>
-                      </motion.div>
-                  </div>
-              </>
+        <>
+            <Helmet>
+                <title>AnimeHub | WatchList</title>
+            </Helmet>
+
+            <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
+                <Header />
+                <motion.div
+                    layout
+                    className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
+                    <AnimatePresence>
+                        {
+                            loader ? <span className="loader m-10"></span> :
+                                <>
+                                    {
+                                        watchlist.length === 0
+                                            ? <p className="text-xl text-white">Watchlist is empty.</p>
+                                            : watchlist.map((anime, index) => (<Animecard key={index} anime={anime} />))
+                                    }
+                                </>
+                        }
+                    </AnimatePresence>
+                </motion.div>
+            </div>
+        </>
     )
 }
 

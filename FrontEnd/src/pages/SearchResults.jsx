@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import { Pagebtn } from '../components/Pagebtn';
 import { Helmet } from 'react-helmet';
 import { useSearchParams } from 'react-router-dom';
+import Searchbar from '../components/Searchbar';
 
 function SearchResults() {
 
@@ -24,7 +25,7 @@ function SearchResults() {
           <title>Search results for {searchParams.toString().split('=')[1]}</title>
         </Helmet>
         <div>{searchParams.values}</div>
-          
+        <Searchbar />
         <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
             <Header />
             <motion.div

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Header from '../components/Header';
 import { Pagebtn } from '../components/Pagebtn';
 import { Helmet } from 'react-helmet';
+import Searchbar from '../components/Searchbar';
 
 function Toprated() {
 
@@ -20,7 +21,7 @@ function Toprated() {
           <Helmet>
           <title>AnimeHub | Toprated</title>
         </Helmet>
-          
+        <Searchbar />
         <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
             <Header />
             <motion.div

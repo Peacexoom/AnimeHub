@@ -50,7 +50,7 @@ export function AnimeProvider({ children }) {
 
   const fetchSearch = async (query) => {
     const data = await fetch(
-      `${IP}/anime/search?search_query=${query}&limit=20`
+      `${IP}/anime/search?search_query=${query}&limit=20`, { headers: { 'user_id': user.user_id } }
     );
     const searchanimes = (await data.json()).data;
     setAnimes(searchanimes);
@@ -60,7 +60,7 @@ export function AnimeProvider({ children }) {
 
   const fetchGenre = async () => {
     let data = await fetch(
-      `${IP}/anime/popular/5`
+      `${IP}/anime/popular/5`, { headers: { 'user_id': user.user_id } }
     );
     data = (await data.json()).data;
     console.log(data);
@@ -70,7 +70,7 @@ export function AnimeProvider({ children }) {
 
   const fetchTrending = async () => {
     let data = await fetch(
-      `${IP}/anime/popular/32`
+      `${IP}/anime/popular/32`, { headers: { 'user_id': user.user_id } }
     );
     data = await data.json();
     console.log(data);
@@ -82,7 +82,7 @@ export function AnimeProvider({ children }) {
 
   const fetchOngoing = async () => {
     let data = await fetch(
-      `${IP}/anime/ongoing/32`
+      `${IP}/anime/ongoing/32`, { headers: { 'user_id': user.user_id } }
     );
     data = await data.json();
     const on_going = data;
@@ -93,29 +93,29 @@ export function AnimeProvider({ children }) {
 
   const fetchToprated = async () => {
     let data = await fetch(
-      `${IP}/anime/top_rated/32`
-      );
-      data = await data.json();
-      const top_rated = data;
-      setToprated(top_rated.data);
-      setLoader(false)
-      setHeader("Top Rated Animes")
-    }
+      `${IP}/anime/top_rated/32`, { headers: { 'user_id': user.user_id } }
+    );
+    data = await data.json();
+    const top_rated = data;
+    setToprated(top_rated.data);
+    setLoader(false)
+    setHeader("Top Rated Animes")
+  }
 
-    const fetchNewest = async () => {
-      let data = await fetch(
-        `${IP}/anime/newest/32`
-      );
-      data = await data.json();
-      const new_est = data;
-      setNewest(new_est.data);
-      setLoader(false)
-      setHeader("Newest Animes")
-    }
+  const fetchNewest = async () => {
+    let data = await fetch(
+      `${IP}/anime/newest/32`, { headers: { 'user_id': user.user_id } }
+    );
+    data = await data.json();
+    const new_est = data;
+    setNewest(new_est.data);
+    setLoader(false)
+    setHeader("Newest Animes")
+  }
 
   const fetchMovies = async () => {
     let data = await fetch(
-      `${IP}/anime/movies/32`
+      `${IP}/anime/movies/32`, { headers: { 'user_id': user.user_id } }
     );
     data = await data.json();
     const mov_ies = data;
@@ -126,11 +126,11 @@ export function AnimeProvider({ children }) {
 
   const GetFavorite = () => {
     setLoader(false)
-    setHeader("Your WatchList")
+    setHeader("Your WatchList");
   }
 
   const logout = () => {
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       localStorage.removeItem("user");
       setIsLoggedIn(false);
       setUser(0);
@@ -139,7 +139,7 @@ export function AnimeProvider({ children }) {
 
   //<========= firebase Google Authentication ========>
   // const googleProvider = new GoogleAuthProvider();// =====> google auth provide
-  
+
   // const GoogleLogin = async () => {
   //   try {
   //     const result = await signInWithPopup(auth, googleProvider);
@@ -188,7 +188,7 @@ export function AnimeProvider({ children }) {
         fetchMovies,
         movies,
         GetFavorite,
-      
+
         // GoogleLogin,
       }}
     >

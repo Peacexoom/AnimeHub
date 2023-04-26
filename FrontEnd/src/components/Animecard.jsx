@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { toast } from 'react-toastify';
 import Contextpage from '../Contextpage';
 import axios from 'axios';
 import config from '../config';
@@ -15,7 +14,7 @@ const IP = config.ip;
 function Animecard({ anime }) {
     const { user } = useContext(Contextpage);
 
-    const [isBookmarked, setIsBookmarked] = useState(null);
+    const [isBookmarked, setIsBookmarked] = useState(anime?.is_added ? true : false);
 
     // useEffect(() => {
     //     if (localStorage.getItem(anime.id)) {
@@ -29,15 +28,30 @@ function Animecard({ anime }) {
         // if (!user) {
         //     toast.info("To bookmark this anime, please log in.");
         // } else {
-        axios.post(`${IP}/user/${user.user_id}/list/add`, {
-                anime_id: `${anime.anime_id}`
-            })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.error(error);
+        if (isBookmarked) {
+            axios.delete(`${IP}/user/${user.user_id}/list/${anime.anime_id}/delete`).then(response => {
+                console.log(response.data)
+                if(response.data.success) {
+                    setIsBookmarked(false);
+                } else {
+                    console.log('Error! Cannot remove bookamrked anime')
+                }
+            }).catch(error => {
+                console.log(error);
             });
+        } else {
+
+            axios.post(`${IP}/user/${user.user_id}/list/add`, {
+                anime_id: anime.anime_id
+            })
+                .then(response => {
+                    console.log(response.data);
+                    setIsBookmarked(true);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
         // setIsBookmarked(!isBookmarked)
         //     if (isBookmarked) {
         //         localStorage.removeItem(anime.id);

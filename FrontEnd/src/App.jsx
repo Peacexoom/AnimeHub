@@ -46,7 +46,6 @@ function App() {
           theme="dark"
         />
         <Navbar />
-        <Searchbar />
 
         <div className="md:ml-[15rem]">
           <Routes>
