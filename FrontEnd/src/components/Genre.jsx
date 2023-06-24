@@ -34,7 +34,7 @@ function Genre() {
                         {genre}
                     </button>
                 ))
-                };
+                }
             </div>
         </>
     )

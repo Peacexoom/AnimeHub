@@ -9,9 +9,10 @@ import Searchbar from '../components/Searchbar';
 
 function Trending() {
 
-  const { loader, page, fetchTrending, trending } = useContext(Contextpage);
-    
+  const { loader, page, fetchTrending, trending, setPage } = useContext(Contextpage);
+
     useEffect(() => {
+        // setPage(1);
         fetchTrending();
     }, [page])
 
@@ -29,7 +30,7 @@ function Trending() {
                 className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
                 <AnimatePresence>
                     {
-                        loader ?  <span className="loader m-10"></span>:
+                        loader ? <span className="loader m-10"></span>:
                             <>
                                 {trending?.map((trend) => (
                                     <Animecard key={trend.anime_id} anime={trend} />

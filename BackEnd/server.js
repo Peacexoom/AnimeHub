@@ -80,12 +80,10 @@ app.post(
     async (req, res, next) => {
         console.log(req.body);
         try {
-            // console.log(req.body);
             const sql = "SELECT user_id,`name`,email,created_at FROM user WHERE email = ? AND password_hash = ?";
-            // console.log(req.body.email, req.body.password);
             let data = (await db.query(sql, [req.body.email, req.body.password]))[0];
             if (data.length) return res.json({ success: true, data: data[0] });
-            else throw { msg: "Invalid credentils" };
+            else throw "Invalid Credentials";
         } catch (err) {
             next(err);
         }
@@ -100,38 +98,40 @@ app.get("/anime/:section/:limit", async (req, res, next) => {
         if (!(await idExists(db, "user", "user_id", user_id))) throwError("User does not exist");
 
         let { section, limit } = req.params;
+        let { offset } = req.query;
         limit = parseInt(limit);
+        offset = offset ? parseInt(offset) : 20;
         if (["popular", "ongoing", "newest", "top_rated", "movies"].includes(section)) {
             let result;
             switch (section) {
                 case "popular":
                     [result] = await db.query(
-                        "SELECT anime.*,watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id ORDER BY `popularity` limit ?",
-                        [user_id, limit]
+                        "SELECT anime.*,watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id ORDER BY `popularity` limit ?,?",
+                        [user_id, offset, limit]
                     );
                     break;
                 case "ongoing":
                     [result] = await db.query(
-                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE status='CURRENTLY_AIRING' AND `type`='TV' ORDER BY `rank` limit ?",
-                        [user_id, limit]
+                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE status='CURRENTLY_AIRING' AND `type`='TV' ORDER BY `rank` limit ?,?",
+                        [user_id, offset, limit]
                     );
                     break;
                 case "newest":
                     [result] = await db.query(
-                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE start_date IS NOT NULL AND `type`='TV' AND source='MANGA' ORDER BY anime.start_date desc limit ?",
-                        [user_id, limit]
+                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE start_date IS NOT NULL AND `type`='TV' AND source='MANGA' ORDER BY anime.start_date desc limit ?,?",
+                        [user_id, offset, limit]
                     );
                     break;
                 case "top_rated":
                     [result] = await db.query(
-                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id ORDER BY `rank` limit ?",
-                        [user_id, limit]
+                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id ORDER BY `rank` limit ?,?",
+                        [user_id, offset, limit]
                     );
                     break;
                 case "movies":
                     [result] = await db.query(
-                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE `type`='MOVIE' ORDER BY `popularity` limit ?",
-                        [user_id, limit]
+                        "SELECT anime.*, watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE `type`='MOVIE' ORDER BY `popularity` limit ?,?",
+                        [user_id, offset, limit]
                     );
                     break;
             }
@@ -148,8 +148,9 @@ app.get("/anime/:section/:limit", async (req, res, next) => {
 app.get("/anime/filter", async (req, res, next) => {
     try {
         let { user_id } = req.headers;
-        let { genre, limit } = req.query;
-        limit = limit || 20;
+        let { genre, limit, offset } = req.query;
+        limit = limit ? parseInt(limit) : 20;
+        offset = offset ? parseInt(offset) : 0;
         genre = genre.toUpperCase();
 
         if (!user_id) throwError("No user_id received.");
@@ -165,15 +166,12 @@ app.get("/anime/filter", async (req, res, next) => {
         }
         let data = [];
         if (genre == "ALL") {
-            console.log("HEY");
-            data = (await db.query("SELECT anime.* FROM anime ORDER BY `popularity` limit ?", [limit]))[0];
-            console.log(data);
+            data = (await db.query("SELECT anime.* FROM anime ORDER BY `popularity` limit ?,?", [offset, limit]))[0];
         } else {
-            console.log("HERE");
             data = (
                 await db.query(
-                    "SELECT genre_filter.*,watchlist.anime_id AS is_added FROM (SELECT anime.* FROM anime INNER JOIN (SELECT * FROM anime_genre WHERE label=?) AS anime_genre ON anime.anime_id=anime_genre.anime_id ORDER BY `popularity` limit ?) AS genre_filter LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON genre_filter.anime_id = watchlist.anime_id",
-                    [genre, limit, user_id]
+                    "SELECT genre_filter.*,watchlist.anime_id AS is_added FROM (SELECT anime.* FROM anime INNER JOIN (SELECT * FROM anime_genre WHERE label=?) AS anime_genre ON anime.anime_id=anime_genre.anime_id ORDER BY `popularity` limit ?,?) AS genre_filter LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON genre_filter.anime_id = watchlist.anime_id",
+                    [genre, offset, limit, user_id]
                 )
             )[0];
         }
@@ -191,17 +189,18 @@ app.get("/anime/search", async (req, res, next) => {
         if (!user_id) throwError("No user_id received.");
         if (!(await idExists(db, "user", "user_id", user_id))) throwError("User does not exist");
 
+        console.log(req.query);
         let { search_query, limit, offset } = req.query;
         limit = limit ? parseInt(limit) : 10;
         offset = offset ? parseInt(offset) : 0;
+        console.log(limit, offset);
         if (search_query && search_query != "") {
             let result = (
                 await db.query(
-                    "SELECT anime.*,watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE MATCH(title,alt_title) AGAINST (? IN NATURAL LANGUAGE MODE) limit ?,?",
+                    "SELECT anime.*,watchlist.anime_id AS is_added FROM anime LEFT JOIN (SELECT anime_id FROM list_item WHERE user_id = ?) AS watchlist ON anime.anime_id = watchlist.anime_id WHERE MATCH(title,alt_title) AGAINST (? IN NATURAL LANGUAGE MODE) ORDER BY `rank` limit ?,?",
                     [user_id, search_query, offset, limit]
                 )
             )[0];
-            console.log(result);
             res.json({ success: true, data: result });
         } else {
             throwError("Invalid query");
