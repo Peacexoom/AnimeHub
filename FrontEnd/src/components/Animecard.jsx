@@ -72,7 +72,6 @@ function Animecard({ anime }) {
             {/* bookmark buttons */}
             <button className="absolute bg-black text-white p-2 z-20 right-0 m-3 rounded-full text-xl" onClick={BookmarkAnime}> {isBookmarked ? <AiFillStar /> : <AiOutlineStar />}</button>
 
-
             <div className='absolute bottom-0 w-full flex justify-between items-end p-3 z-20'>
                 <h1 className='text-white text-xl font-semibold  break-normal break-words'>{anime.title || anime.name}</h1>
 

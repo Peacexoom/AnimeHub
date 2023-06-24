@@ -37,7 +37,7 @@ const connectToDB = async () => {
         user: "root",
         password: "Solanki@11",
         connectionLimit: 10000,
-        database: "anime_hub",
+        database: "anime-hub",
     });
     console.log("Connected to DB");
 };

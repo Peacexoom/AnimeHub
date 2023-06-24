@@ -23,7 +23,7 @@ function Genre() {
     return (
         <>
             <Helmet>
-                <title>BlueBird Animes | Genres</title>
+                <title>AnimeHub | Genres</title>
             </Helmet>
 
             <div className='flex flex-wrap justify-center px-2'>
