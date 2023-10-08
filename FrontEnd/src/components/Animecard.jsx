@@ -41,7 +41,7 @@ function Animecard({ anime }) {
             });
         } else {
 
-            axios.post(`${IP}/user/${user.user_id}/list/add`, {
+            axios.post(`${HOST}/user/${user.user_id}/list/add`, {
                 anime_id: anime.anime_id
             })
                 .then(response => {

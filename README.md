@@ -1,6 +1,11 @@
 # AnimeHub
 AnimeHub is a user-friendly and visually appealing anime website. It allows users to search for animes by title, sort them by genre, view popular, ongoing, top-rated, and newest anime. Additionally, users can create and manage their watchlist.
 
+![Alt text](Images/image-2.png)
+
+![Alt text](Images/image-3.png)
+
+![Alt text](Images/image-1.png)
 
 ## Technologies Used
 1. Tailwind CSS
