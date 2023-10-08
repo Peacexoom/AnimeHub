@@ -49,7 +49,7 @@ Open AnimeHub\BackEnd\anime_hub_dump.sql
 
 Press start import
 ```
-
+7. Make .env file in .\AnimeHub\BackEnd just like .env.example and add your password.
 7. Install node modules in BackEnd and start backend server.
 ```markdown
 cd BackEnd
