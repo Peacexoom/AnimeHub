@@ -11,7 +11,7 @@ import axios from "axios";
 const Contextpage = createContext({
   header: '',
 });
-const IP = config.ip;
+const IP = config.host;
 
 export function AnimeProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("user")));
@@ -44,7 +44,7 @@ export function AnimeProvider({ children }) {
   }, [header]);
 
   // const filteredGenre = async () => {
-    // let data = await fetch(
+  // let data = await fetch(
   //     `${IP}/anime/popular/50`, { headers: { 'user_id': user.user_id } }
   //   );
 

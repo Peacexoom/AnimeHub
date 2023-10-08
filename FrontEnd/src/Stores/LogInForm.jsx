@@ -32,7 +32,7 @@ const LogInFrom = () => {
     setErrors(err);
     if (err.email === "" && err.password === "") {
       axios
-        .post(`${config.ip}/login`, values)
+        .post(`${config.host}/login`, values)
         .then((res) => {
           console.log(res.data);
           if (res.data.errors) {
@@ -45,7 +45,7 @@ const LogInFrom = () => {
               setUser(res.data.data);
             } else {
               alert(res.data.msg);
-              
+
             }
           }
         })

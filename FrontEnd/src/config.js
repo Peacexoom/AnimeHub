@@ -1,5 +1,5 @@
 let config = {
-    ip: "https://anime-hub-backend.onrender.com"
-}
+    host: "http://localhost:5000",
+};
 
 export default config;

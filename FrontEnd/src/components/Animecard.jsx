@@ -9,7 +9,7 @@ import Contextpage from '../Contextpage';
 import axios from 'axios';
 import config from '../config';
 
-const IP = config.ip;
+const HOST = config.host;
 
 function Animecard({ anime }) {
     const { user } = useContext(Contextpage);
@@ -29,9 +29,9 @@ function Animecard({ anime }) {
         //     toast.info("To bookmark this anime, please log in.");
         // } else {
         if (isBookmarked) {
-            axios.delete(`${IP}/user/${user.user_id}/list/${anime.anime_id}/delete`).then(response => {
+            axios.delete(`${HOST}/user/${user.user_id}/list/${anime.anime_id}/delete`).then(response => {
                 console.log(response.data)
-                if(response.data.success) {
+                if (response.data.success) {
                     setIsBookmarked(false);
                 } else {
                     console.log('Error! Cannot remove bookamrked anime')

@@ -18,7 +18,7 @@ export const Detail = () => {
 
     const fetchAnime = async () => {
         const data = await fetch(
-            `${config.ip}/anime/${anime_id}`
+            `${config.host}/anime/${anime_id}`
         );
         let anime = (await data.json()).data;
         if (anime.start_date) anime.start_date = new Date(anime.start_date);

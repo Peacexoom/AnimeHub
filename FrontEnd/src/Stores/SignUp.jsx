@@ -27,7 +27,7 @@ function Signup() {
     setErrors(err);
     if (err.name === "" && err.email === "" && err.password === "") {
       axios
-        .post(`${config.ip}/signup`, values)
+        .post(`${config.host}/signup`, values)
         .then((res) => {
           navigate("/");
         })
@@ -98,10 +98,10 @@ function Signup() {
             <Link
               to="/"
               className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none py-2 px-7 mt-10 bg-teal-400 text-black font-semibold rounded-xl"
-              >
+            >
               Login
             </Link>
-                <p>You are agree to aour terms and policies</p>
+            <p>You are agree to aour terms and policies</p>
           </form>
         </div>
       </div>
