@@ -1,5 +1,6 @@
 # AnimeHub
-AnimeHub is a user-friendly and visually appealing anime website built using ReactJS and NodeJS. It allows users to search for animes by title, sort them by genre, view popular, ongoing, top-rated, and newest anime. Additionally, users can create and manage their watchlist.
+AnimeHub is a user-friendly and visually appealing anime website. It allows users to search for animes by title, sort them by genre, view popular, ongoing, top-rated, and newest anime. Additionally, users can create and manage their watchlist.
+
 
 ## Technologies Used
 1. Tailwind CSS
@@ -18,6 +19,8 @@ AnimeHub is a user-friendly and visually appealing anime website built using Rea
 
 ## How to Contribute to this repository
 
+#### Before contibuting create an issue of the bug or a feature you would like to add in the project and get the task assigned for youself.
+
 1. Star the repository.
 2. Fork the repository. (Click the Fork button in the top right of this page, click your Profile Image)
 3. Clone the forked repository to your local machine.
@@ -28,28 +31,47 @@ git clone https://github.com/your-username/AnimeHub.git
 ```markdown
 cd AnimeHub
 ```
-5. Install node modules in FrontEnd.
-```markdown
-cd FrontEnd
-npm install
-```
-6. Install node modules in BackEnd.
-```markdown
-cd BackEnd
-npm install
-```
-4. Add/Create your project to the specific folder as described in what you can contribute section.
 5. Make a new branch
 ```markdown
 git checkout -b branch-name
 ```
-6. Make change in the repository with the new branch.
-7. Push the changes.
+6. Import anime_hub database into MySQL Workbench
+```
+Open MySQL Workbench
+
+Open the Local instance
+
+Click Server->Data Import
+
+Select Import from Self-Contained File option
+
+Open AnimeHub\BackEnd\anime_hub_dump.sql
+
+Press start import
+```
+
+7. Install node modules in BackEnd and start backend server.
+```markdown
+cd BackEnd
+npm install
+npm run start
+```
+
+8. Install node modules in FrontEnd and start frontend server.
+```markdown
+cd FrontEnd
+npm install
+npm run dev
+```
+
+9. Make change in the repository with the new branch.
+
+10. Push the changes.
 ```markdown
 git add .
 git commit -m "Your commit Message"
 git push origin branch-name
 ```
-8.  Make a pull request on git hub.
+11.  Make a pull request on Github.
 
 ### Happy anime watching! 🍿
