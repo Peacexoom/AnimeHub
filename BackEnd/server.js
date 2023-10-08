@@ -32,13 +32,13 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 const connectToDB = async () => {
-    db = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "Solanki@11",
-        connectionLimit: 10000,
-        database: "anime-hub",
-    });
+    let connParam = {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+    };
+    db = await mysql.createConnection(connParam);
     console.log("Connected to DB");
 };
 
@@ -46,6 +46,11 @@ connectToDB();
 
 app.get("/", (req, res) => {
     return res.send("HELLO");
+});
+
+app.use((req, res, next) => {
+    console.log(req.url);
+    next();
 });
 
 // signup api
