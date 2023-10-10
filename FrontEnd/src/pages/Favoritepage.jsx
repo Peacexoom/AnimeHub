@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import config from '../config';
 
-const IP = config.ip;
+const IP = config.host;
 
 function Favoritepage() {
 
@@ -15,6 +15,7 @@ function Favoritepage() {
 
     useEffect(() => {
         GetFavorite();
+        console.log(IP)
         fetch(`${IP}/user/${user.user_id}/list`, { headers: { 'user_id': user.user_id } })
             .then(res => res.json())
             .then(data => {
