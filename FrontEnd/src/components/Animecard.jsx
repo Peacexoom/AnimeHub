@@ -67,7 +67,7 @@ function Animecard({ anime }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 1 }}
             layout
-            className="card relative w-full md:w-60 h-[410px] md:h-[340px] my-3 mx-4 md:my-5 md:mx-0 cursor-pointer rounded-xl overflow-hidden">
+            className="card relative md:w-60 h-[410px] md:h-[340px] my-3 mx-4 md:my-5 md:mx-0 cursor-pointer rounded-xl overflow-hidden">
 
             {/* bookmark buttons */}
             <button className="absolute bg-black text-white p-2 z-20 right-0 m-3 rounded-full text-xl" onClick={BookmarkAnime}> {isBookmarked ? <AiFillStar /> : <AiOutlineStar />}</button>
