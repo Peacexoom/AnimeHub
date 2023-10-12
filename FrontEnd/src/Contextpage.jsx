@@ -43,18 +43,18 @@ export function AnimeProvider({ children }) {
     setPage(1);
   }, [header]);
 
-  // const filteredGenre = async () => {
-  // let data = await fetch(
-  //     `${IP}/anime/popular/50`, { headers: { 'user_id': user.user_id } }
-  //   );
+  const filteredGenre = async () => {
+  let data = await fetch(
+      `${IP}/anime/popular/50`, { headers: { 'user_id': user.user_id } }
+    );
 
-  //   const animes = (await data.json()).data;
-  //   setLoader(false);
-  //   setHeader("Genres");
-  // };
+    const animes = (await data.json()).data;
+    setLoader(false);
+    setHeader("Genres");
+  };
 
   const fetchSearch = async (query) => {
-    // setLoader(true);
+    setLoader(true);
     const data = await fetch(
       `${IP}/anime/search?search_query=${query}&limit=${pageSize}&offset=${(page - 1) * pageSize}`, { headers: { 'user_id': user.user_id } }
     );
