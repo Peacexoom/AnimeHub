@@ -80,3 +80,9 @@ git push origin branch-name
 11.  Make a pull request on Github.
 
 ### Happy anime watching! 🍿
+
+
+## Contributors
+<a href="https://github.com/Peacexoom/AnimeHub/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Peacexoom/AnimeHub" />
+</a>
