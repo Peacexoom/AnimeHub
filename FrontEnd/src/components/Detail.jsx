@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import Contextpage from '../Contextpage';
+import React, { useContext, useEffect, useState } from 'react';
 import { HiChevronLeft } from "react-icons/hi";
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Link, useParams } from 'react-router-dom';
+import Contextpage from '../Contextpage';
 import config from '../config';
 
 export const Detail = () => {
@@ -69,20 +69,20 @@ export const Detail = () => {
                         </div> */}
 
                         {/* overview */}
-                        <div className='flex p-10 h-full'>
+                        <div className='w-full flex max-2xl:flex-col max-2xl:justify-center max-2xl:items-center p-10 h-full'>
                             <div className='w-1/4 h-full'>
                                 <img src={animedet.img_link} className='' alt={animedet.title} />
                             </div>
-                            <div className='w-3/4 px-10 flex flex-col items-start'>
+                            <div className='w-3/4 max-lg:w-full px-10 flex flex-col lg:items-start text-justify'>
                                 <h2 className='text-white text-left pt-5 font-Roboto text-[36px]'>{animedet.title} ({animedet.alt_title})</h2>
-                                <div className="details flex">
+                                <div className="details flex flex-shrink flex-wrap gap-3 mt-3">
                                     <p className='text-gray-200 font-semibold bg-blue-600 mr-2 rounded-md pl-2 p-1'>Score : {animedet.score}</p>
                                     <p className='text-gray-200 font-semibold bg-green-600 mr-2 rounded-md pl-2 p-1'>Popularity : {animedet.popularity}</p>
                                     <p className='text-gray-200 font-semibold bg-orange-500 mr-2 rounded-md pl-2 p-1'>{animedet.users} users</p>
                                     <p className='text-gray-200 font-semibold bg-red-500 mr-2 rounded-md pl-2 p-1'>{animedet.members} members</p>
                                 </div>
 
-                                <div className='text-left w-4/5 pt-5 leading-7 text-gray-200 font-normal text-[15px] mb-10'>{animedet.synopsis}</div>
+                                <div className='lg:text-left text-justify w-full pt-5 leading-7 text-gray-200 font-normal text-[15px] mb-10'>{animedet.synopsis}</div>
                                 <div className='text-blue-100 font-semibold my-3 flex justify-center'>
                                     <h2 className='bg-blue-600/30 border-2 border-blue-700 py-2 px-3 rounded-full'>Premiered : {(animedet.season)} {animedet?.start_date?.getFullYear()}</h2>
                                 </div>
