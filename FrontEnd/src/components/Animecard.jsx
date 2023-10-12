@@ -82,11 +82,11 @@ function Animecard({ anime }) {
                     <h1 className='font-bold px-4 py-1 text-red-600 bg-zinc-900 rounded-full'>N/A</h1>}
             </div>
 
-            <Link to={`/animedetail/${anime.anime_id}`} className='h-full w-full shadow absolute z-10'></Link>
+            <div className='w-full h-full hover:scale-110 duration-700 ease-in-out'>
+                <Link to={`/animedetail/${anime.anime_id}`} className='h-full w-full shadow absolute z-10'></Link>
 
-            <div className='w-full h-full'>
                 {anime.poster_path === null ? <img src={noimage} /> :
-                    <LazyLoadImage effect='blur'  height={'100%'} width={'100%'} className='w-full md:h-full img'    src={anime.img_link}  />}
+                <LazyLoadImage effect='blur'  height={'100%'} width={'100%'} className='w-full md:h-full'    src={anime.img_link}  />}
            </div>
         </motion.div>
     )
