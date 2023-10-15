@@ -9,9 +9,9 @@ import config from '../config';
 const IP = config.host;
 
 function Favoritepage() {
-
     const { loader, user, GetFavorite } = useContext(Contextpage);
     const [watchlist, setWatchlist] = useState([]);
+    const [activeGenre, setActiveGenre] = useState('All'); // Initialize activeGenre with null
 
     useEffect(() => {
         GetFavorite();
@@ -25,6 +25,21 @@ function Favoritepage() {
             })
             .catch(err => console.log(err));
     }, []);
+
+    const filterWatchlistByGenre = (anime) => {
+        if (activeGenre === 'All') {
+            return true; // Show all genres
+        } else if (activeGenre === 'Finished') {
+            return anime.list_type === 'COMPLETED';
+        } else if (activeGenre === 'Watching') {
+            return anime.list_type === 'CURRENT';
+        } else if (activeGenre === 'Aim to see') {
+            return anime.list_type === 'PLAN_TO_WATCH';
+        }
+
+        return false; // Default: Hide if no match
+    };
+
 
     // const handleSubmit = async (event) => {
     //     event.preventDefault();
@@ -57,6 +72,21 @@ function Favoritepage() {
 
             <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
                 <Header />
+                <div className='flex flex-wrap justify-center px-2'>
+                    {['All', 'Finished', 'Watching', 'Aim to see'].map((genre) => (
+                        <button
+                            onClick={() => setActiveGenre(genre)}
+                            className={`${
+                                activeGenre === genre
+                                    ? 'active '
+                                    : 'bg-slate-800 hover:bg-slate-700 '
+                            }px-4 py-2 m-2 text-white font-semibold rounded-3xl`}
+                            key={genre}
+                        >
+                            {genre}
+                        </button>
+                    ))}
+                </div>
                 <motion.div
                     layout
                     className="w-full md:p-2 flex flex-wrap relative justify-evenly md:justify-around">
@@ -67,7 +97,13 @@ function Favoritepage() {
                                     {
                                         watchlist.length === 0
                                             ? <p className="text-xl text-white">Watchlist is empty.</p>
-                                            : watchlist.map((anime, index) => (<Animecard key={anime.anime_id} anime={anime} />))
+                                            : watchlist.map((anime, index) => {
+                                                // Check if the anime should be displayed based on the active genre
+                                                if (filterWatchlistByGenre(anime)) {
+                                                    return <Animecard key={anime.anime_id} anime={anime} />;
+                                                }
+                                                return null; // Don't render if it doesn't match the active genre
+                                            })
                                     }
                                 </>
                         }
