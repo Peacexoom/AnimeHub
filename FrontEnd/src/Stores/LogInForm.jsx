@@ -59,7 +59,7 @@ const LogInFrom = () => {
       }}
     >
       <div className="backdrop-blur bg-opacity-25 bg-blue-200/30 p-8 rounded-xl shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-5 text-center">Login existing Account</h2>
+        <h2 className="text-3xl font-bold mb-5 text-center">Login</h2>
 
         {backendError.length > 0 && (
           <div className="mb-4">

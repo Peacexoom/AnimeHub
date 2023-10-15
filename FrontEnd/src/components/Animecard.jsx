@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import noimage from '../assets/images/no-image.jpg'
 import { motion } from 'framer-motion'
@@ -14,7 +14,7 @@ const HOST = config.host;
 function Animecard({ anime }) {
     const { user } = useContext(Contextpage);
 
-    const [isBookmarked, setIsBookmarked] = useState(anime?.is_added ? true : false);
+    const [isBookmarked, setIsBookmarked] = useState(!!anime?.is_added);
     const [showOptions, setShowOptions] = useState(false); // Define showOptions state
 
     // useEffect(() => {
@@ -116,13 +116,6 @@ function Animecard({ anime }) {
                         <button
                             className="px-4 py-2 text-white bg-slate-800 rounded-full mb-2"
                             onClick={() => BookmarkAnime('COMPLETED', false)}
-                            style={{ transition: 'background-color 0.3s ease' }}
-                            onMouseEnter={(e) => {
-                                e.target.style.backgroundColor = '#4A5568'; // Change color on hover
-                            }}
-                            onMouseLeave={(e) => {
-                                e.target.style.backgroundColor = ''; // Reset color on hover out
-                            }}
                         >
                             Mark as Finished
                         </button>
