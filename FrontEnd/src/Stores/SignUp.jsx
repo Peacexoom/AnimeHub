@@ -42,8 +42,8 @@ function Signup() {
       }}
     >
       <div className="backdrop-blur-md bg-opacity-25 bg-blue-200/30 p-8 rounded-xl shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-5 text-center">
-          Creating a New Account
+        <h2 className="text-3xl font-bold mb-5 text-center">
+          Sign Up
         </h2>
         <form action="" onSubmit={handleSubmit}>
           <div className="w-54 text-gray-800">
