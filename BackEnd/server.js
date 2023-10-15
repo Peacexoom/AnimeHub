@@ -4,12 +4,14 @@ const cors = require("cors");
 require("dotenv").config();
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const bcrypt = require("bcrypt");
 // const morgan = require("morgan");
 const { check, validationResult } = require("express-validator");
 const port = 5000;
 const app = express();
 let db;
 let genres = [];
+const saltRounds = 10;
 
 function throwError(msg) {
     throw { success: false, msg };
@@ -131,8 +133,10 @@ app.post("/signup", async (req, res, next) => {
     try {
         console.log(req.body);
         const emailToken = crypto.randomBytes(64).toString("hex");
+        const hashToken = await bcrypt.hash(req.body.password, saltRounds);
+        console.log("Hash: ", hashToken);
         const sql = "INSERT INTO user(name,email,password_hash,created_at,is_admin,is_verified,emailToken) VALUES (?,?,?,curdate(),0,0,?)";
-        const values = [req.body.name, req.body.email, req.body.password, emailToken];
+        const values = [req.body.name, req.body.email, hashToken, emailToken];
         const [result] = await db.query(sql, values, (err, data) => {
             if (err) {
                 return res.json(err);
@@ -178,16 +182,22 @@ app.post(
     async (req, res, next) => {
         console.log(req.body);
         try {
-            const sql = "SELECT user_id,`name`,email,created_at,is_verified  FROM user WHERE email = ? AND password_hash = ?";
-            const [data] = await db.query(sql, [req.body.email, req.body.password]);
+            const sql = "SELECT user_id, `name`, email, password_hash, created_at, is_verified FROM user WHERE email = ?";
+            const [data] = await db.query(sql, [req.body.email]);
 
-            if (data.length) {
+            if (data.length > 0) {
                 const user = data[0];
-                if (user.is_verified) {
-                    return res.json({ success: true, data: user });
-                } else {
-                    return res.json({ success: false, msg: "Please verify your email before logging in." });
-                }
+
+                // Compare the provided password with the stored hash
+                const valid = await bcrypt.compare(req.body.password, user.password_hash);
+
+                if (valid) {
+                    if (user.is_verified) {
+                        return res.json({ success: true, data: user });
+                    } else {
+                        return res.json({ success: false, msg: "Please verify your email before logging in." });
+                    }
+                } else throw "Invalid password";
             } else {
                 throw "Invalid Credentials";
             }
