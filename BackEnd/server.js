@@ -371,26 +371,30 @@ app.get("/user/:user_id/list", async (req, res, next) => {
     let { user_id } = req.params;
     try {
         let [result] = await db.query(
-            "SELECT list_item.`type` AS `status`,list_item.anime_id AS anime_id,list_item.anime_id AS is_added,title,alt_title,img_link,num_episodes,rating,anime.`type`,`status`,season,score,`rank` FROM list_item INNER JOIN anime ON list_item.anime_id=anime.anime_id where list_item.user_id=?",
+            "SELECT list_item.`type` AS `status`, list_item.anime_id AS anime_id, list_item.anime_id AS is_added, title, alt_title, img_link, num_episodes, rating, anime.`type`, `status`, season, score, `rank`, list_item.`type` AS list_type FROM list_item INNER JOIN anime ON list_item.anime_id=anime.anime_id WHERE list_item.user_id=?",
             [user_id]
         );
+
         // for (let i = 0; i < result.length; i++) {
         //     let genres = (
         //         await db.query("SELECT label FROM anime_genre WHERE anime_id=?", [result[i].anime_id])
         //     )[0].map((tuple) => tuple.label);
         //     result[i].genres = genres;
         // }
-        // console.log(result);
+        //console.log(result);
+
         if (result) {
             return res.json({ success: true, data: result });
         } else {
-            throw { success: false, msg: "Error in fetching data from database." };
+            throw { success: false, msg: "Error in fetching data from the database." };
         }
     } catch (err) {
         err.route = req.route;
         next(err);
     }
 });
+
+
 
 app.get("");
 
@@ -480,6 +484,23 @@ app.delete("/user/:user_id/list/:anime_id/delete", async (req, res, next) => {
         }
         next(err);
     }
+});
+
+//check which animes are in my watchlist
+app.get('/user/:user_id/list/check/:anime_id', (req, res) => {
+    const { user_id, anime_id } = req.params;
+
+    const query = 'SELECT COUNT(*) AS count FROM list_item WHERE user_id = ? AND anime_id = ?';
+    db.query(query, [user_id, anime_id], (error, results) => {
+        if (error) {
+            console.error('Error checking bookmark:', error);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+
+        const isBookmarked = results[0].count > 0;
+        res.json({ isBookmarked });
+    });
 });
 
 // generic error handler
