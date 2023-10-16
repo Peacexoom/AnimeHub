@@ -10,7 +10,7 @@
     const navigate = useNavigate();
     const { filteredGenre, fetchSearch } = useContext(Contextpage);
     const [value, setValue] = useState('');
-    const debouncedSearch = useDebounce(value, 1500);
+    
 
     const handleSearch = () => {
       const query = value.trim();
@@ -19,8 +19,6 @@
           filteredGenre();
         } else {
           const results = fetchSearch(query);
-          // setGenres(results);
-          // setBackGenre(true);
           navigate(`/search?search_query=${query}`);
         }
       } catch (error) {
@@ -28,12 +26,7 @@
       }
     };
 
-    // useEffect(() => {
-    //   console.log('run');
-    //   if (debouncedSearch !== null) {
-    //     handleSearch();
-    //   }
-    // }, [debouncedSearch]);
+    
 
     const handleButtonClick = () => {
       // Call handleSearch when the button is clicked
