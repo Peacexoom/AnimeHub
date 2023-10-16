@@ -4,7 +4,6 @@
   import { Helmet } from 'react-helmet';
   import Contextpage from '../Contextpage';
   import { useNavigate } from 'react-router-dom';
-  import useDebounce from '../hooks/useDebounce';
   import './Searchbar.css';
   function Searchbar() {
     const navigate = useNavigate();
