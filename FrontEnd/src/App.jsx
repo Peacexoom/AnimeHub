@@ -24,8 +24,8 @@ function App() {
   if (!isLoggedIn) {
     return (
       <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<LogInForm />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="login" element={<LogInForm />} />
         <Route path="*" element={<LogInForm />} />
       </Routes>
     );
@@ -49,21 +49,21 @@ function App() {
         <div className="md:ml-[15rem]">
           <Routes>
             <Route path="/" element={<Navigate replace to="/trending" />} />
-            <Route path="/trending" element={<Trending />} />
-            <Route path="/genres" element={<Container />} />
-            <Route path="/ongoing" element={<Ongoing />} />
-            <Route path="/toprated" element={<Toprated />} />
-            <Route path="/newest" element={<Newest />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/animedetail/:anime_id" element={<Detail />} />
-            <Route path="/favorite" element={<Favorite />} />
-            <Route path="/search" element={<SearchResults />} />
+            <Route path="trending" element={<Trending />} />
+            <Route path="genres" element={<Container />} />
+            <Route path="ongoing" element={<Ongoing />} />
+            <Route path="toprated" element={<Toprated />} />
+            <Route path="newest" element={<Newest />} />
+            <Route path="movies" element={<Movies />} />
+            <Route path="animedetail/:anime_id" element={<Detail />} />
+            <Route path="favorite" element={<Favorite />} />
+            <Route path="search" element={<SearchResults />} />
             <Route
-              path="/login"
+              path="login"
               element={<Navigate replace to="/trending" />}
             />
             <Route
-              path="/signup"
+              path="signup"
               element={<Navigate replace to="/trending" />}
             />
             <Route
