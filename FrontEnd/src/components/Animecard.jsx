@@ -147,7 +147,7 @@ function Animecard({ anime }) {
                 {showOptions ? (
                     <div className="h-full w-full shadow absolute z-10" style={{ pointerEvents: 'none' }}></div>
                 ) : (
-                    <Link to={`/animedetail/${anime.anime_id}`} className="h-full w-full shadow absolute z-10"></Link>
+                    <Link to={`/animedetail/${anime.anime_id}`} className="h-full w-full shadow absolute z-10 h-full w-full shadow absolute z-10 bg-gradient-to-t from-black to-transparent hover:bg-none"></Link>
                 )}
 
                 {anime.poster_path === null ? (
