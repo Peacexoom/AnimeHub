@@ -16,7 +16,7 @@ export const Detail = () => {
     const { setLoader } = useContext(Contextpage);
     const { anime_id } = useParams();
     const [showOptions, setShowOptions] = useState(false); // Define showOptions state
-
+    const { setActiveGenre} = useContext(Contextpage);//To set the activegenre on the genre page
     const [animedet, setAnimedet] = useState();
     const [isBookmarked, setIsBookmarked] = useState(!!animedet?.is_added);
     // const [castdata, setCastdata] = useState([]);
@@ -188,7 +188,7 @@ export const Detail = () => {
                                 <div className='flex justify-center flex-wrap'>
                                     {animedet.genres.map((genreLabel, index) => (
                                         <>
-                                            <div key={index} className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2'>{genreLabel}</div>
+                                            <Link to="/genres" key={index} onClick={() => setActiveGenre(genreLabel)}  className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2'>{genreLabel}</Link>
                                         </>
                                     ))}
                                 </div>
