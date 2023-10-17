@@ -72,3 +72,31 @@ button:hover {
 }
   }
   
+
+  /* CSS for confirm button */
+.btna-success {
+  background-color: #28a745; /* Adjust background color for success button */
+  color: #fff; /* Text color for success button */
+  border: 2px solid #28a745; /* Border for success button */
+  padding: 10px 20px; /* Padding for success button */
+  border-radius: 5px; /* Border radius for success button */
+}
+
+.btna-success:hover {
+  background-color: #218838; /* Hover background color for success button */
+  border: 2px solid #218838; /* Hover border for success button */
+}
+
+/* CSS for cancel button */
+.btna-danger {
+  background-color: #dc3545; /* Adjust background color for danger (cancel) button */
+  color: #fff; /* Text color for danger (cancel) button */
+  border: 2px solid #dc3545; /* Border for danger (cancel) button */
+  padding: 10px 20px; /* Padding for danger (cancel) button */
+  border-radius: 5px; /* Border radius for danger (cancel) button */
+}
+
+.btna-danger:hover {
+  background-color: #c82333; /* Hover background color for danger (cancel) button */
+  border: 2px solid #c82333; /* Hover border for danger (cancel) button */
+}
