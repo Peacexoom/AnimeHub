@@ -28,6 +28,10 @@ async function idExists(db, tableName, ID_key, ID) {
 }
 
 const sendMail = (name, email, token) => {
+    if(process.env.EMAIL_VERIFICATION_ENABLED === "false") {
+        console.log("Email verfication disabled");
+        return;
+    }
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -143,7 +147,9 @@ app.post("/signup", async (req, res, next) => {
             }
             return res.json(data);
         });
-        sendMail(req.body.name, req.body.email, emailToken);
+        if(process.env.EMAIL_VERIFICATION_ENABLED === "true") {
+            sendMail(req.body.name, req.body.email, emailToken);
+        }
         return res.json({ success: true, msg: `${req.body.name} added` });
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
@@ -192,7 +198,7 @@ app.post(
                 const valid = await bcrypt.compare(req.body.password, user.password_hash);
 
                 if (valid) {
-                    if (user.is_verified) {
+                    if (user.is_verified || process.env.EMAIL_VERIFICATION_ENABLED === "false") {
                         return res.json({ success: true, data: user });
                     } else {
                         return res.json({ success: false, msg: "Please verify your email before logging in." });
@@ -393,8 +399,6 @@ app.get("/user/:user_id/list", async (req, res, next) => {
         next(err);
     }
 });
-
-
 
 app.get("");
 
