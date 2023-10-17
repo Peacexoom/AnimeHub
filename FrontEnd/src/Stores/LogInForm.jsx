@@ -1,14 +1,10 @@
-// import {react} from 'react'
-// import InputField from "./InputField";
-// import SubmitButton from "./SubmitButton";
 import axios from "axios";
-import Contextpage from "../Contextpage";
 import React, { useState, useContext } from "react";
-// import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./LoginValidation";
 import config from "../config.js";
-// import Home from "../Home";
+import Contextpage from "../Contextpage";
+import backgroundImage from "../assets/images/bg-img.jpg";
 
 const LogInFrom = () => {
   const { setIsLoggedIn, setUser } = useContext(Contextpage);
@@ -22,102 +18,129 @@ const LogInFrom = () => {
   const handleInput = (event) => {
     setValues((prev) => ({
       ...prev,
-      [event.target.name]: [event.target.value],
+      [event.target.name]: event.target.value,
     }));
   };
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("logging in");
     const err = Validation(values);
     setErrors(err);
     if (err.email === "" && err.password === "") {
-      axios
-        .post(`${config.host}/login`, values)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.errors) {
-            setBackendError(res.data.errors);
-          } else {
-            setBackendError([]);
-            if (res.data.success) {
-              localStorage.setItem("user", JSON.stringify(res.data.data));
-              setIsLoggedIn(true);
-              setUser(res.data.data);
-            } else {
-              alert(res.data.msg);
+      try {
+        const res = await axios.post(`${config.host}/login`, values);
 
-            }
+        if (res.data.errors) {
+          setBackendError(res.data.errors);
+        } else {
+          setBackendError([]);
+          if (res.data.success) {
+            localStorage.setItem("user", JSON.stringify(res.data.data));
+            setIsLoggedIn(true);
+            setUser(res.data.data);
+          } else {
+            alert(res.data.msg);
           }
-        })
-        .catch((err) => {
-          console.log(err);
-          console.log(err.msg); alert(err.response.data.error);
-        });
+        }
+      } catch (err) {
+        console.error(err);
+        alert(err.response.data.error);
+      }
     }
   };
   const { GoogleLogin } = useContext(Contextpage);
   return (
     <div
-      className="border-2 border-white/30 p-5 bg-[#757575] flex justify-center items-center gap-5 h-96 rounded-2xl cursor-pointer "
-      onClick={GoogleLogin}
+      className="flex justify-center items-center h-screen bg-gray-900"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <div className="d-flex justify-content-center align-items-center bg-primary vh-100 h-96 bg-[#757575]">
-        <div className=" p-3 rounded w-25 first-letter:h-90 bg-[#757575] ">
-          <h2 className="p-5 text-2xl text-center font-bold">Sign-In</h2>
-          {backendError ? (
-            backendError.map((e) => <p className="text-danger">{e.msg}</p>)
-          ) : (
-            <span></span>
-          )}
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="email" className="mr-8">
-                <strong>Email</strong>
-              </label>
-              <input
-                type="email"
-                placeholder="Enter Email"
-                name="email"
-                onChange={handleInput}
-                className="form-control rounded-0 mx-2 py-1 px-3 bg-white text-black font-semibold rounded-xl hover:border-blue-600"
-              />
-              {errors.email && (
-                <span className="text-danger"> {errors.email}</span>
-              )}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="mr-1">
-                <strong>Password</strong>
-              </label>
-              <input
-                type="password"
-                placeholder="Enter Password"
-                name="password"
-                onChange={handleInput}
-                className="form-control rounded-0 py-1 px-3 mx-2 bg-white text-black font-semibold rounded-xl hover:border-blue-600"
-              />
-              {errors.password && (
-                <span className="text-danger"> {errors.password}</span>
-              )}
-            </div>
+      <div className="backdrop-blur bg-opacity-25 bg-blue-200/30 p-8 rounded-xl shadow-md w-96">
+        <h2 className="text-3xl font-bold mb-5 text-center">Login</h2>
+
+        {backendError.length > 0 && (
+          <div className="mb-4">
+            {backendError.map((e, index) => (
+              <p key={index} className="text-red-500">
+                {e.msg}
+              </p>
+            ))}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <div className="w-54 text-gray-800">
+            <label
+              htmlFor="email"
+              className="cursor-text rounded-xl block text-md font-semibold mb-1"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter email address"
+              onChange={handleInput}
+              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.email && (
+              <span className="text-red-500 text-sm">{errors.email}</span>
+            )}
+          </div>
+
+          <div className="w-54 mt-4 mb-5 text-gray-800">
+            <label
+              for="password"
+              className="cursor-text block text-md font-semibold mb-1"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              onChange={handleInput}
+              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.password && (
+              <span className="text-red-500 text-sm">{errors.password}</span>
+            )}
+          </div>
+
+          <div className="flex justify-center">
             <button
               type="submit"
-              className="btn btn-success w-100 rounded-0 py-2 px-7 m-5 bg-teal-400 text-black font-semibold rounded-xl"
+              className="bg-rose-600 text-white px-4 py-2 mr-4 rounded-md hover:bg-rose-900 transition duration-300"
             >
               Log in
             </button>
-            <Link
-              to="/signup"
-              className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none py-2 px-7 mt-10 bg-teal-400 text-black font-semibold rounded-xl"
+
+            <button
+              onClick={() => {
+                // Add any additional logic you want to execute on button click
+                // For example, navigating to the signup page
+                navigate("/signup");
+              }}
+              className="bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-900 transition duration-300"
             >
-              CreateAccount
-            </Link>
-            <p>You are agree to our terms and policies</p>
-          </form>
-          <div className="flex p-4 ">
-            {/* <FcGoogle className="text-3xl mr-5" />
-          <p className="text-white font-semibold">Sign in with Google</p> */}
+              Sign Up
+            </button>
           </div>
+
+          <p className="text-xs mt-5 text-black text-center">
+            You agree to our terms and policies
+          </p>
+        </form>
+
+        <div className="flex items-center mt-">
+          {/* Add your Google login button or icon here */}
         </div>
       </div>
     </div>

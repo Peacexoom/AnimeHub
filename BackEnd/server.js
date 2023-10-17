@@ -2,12 +2,16 @@ const express = require("express");
 const mysql = require("mysql2/promise");
 const cors = require("cors");
 require("dotenv").config();
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
+const bcrypt = require("bcrypt");
 // const morgan = require("morgan");
 const { check, validationResult } = require("express-validator");
 const port = 5000;
 const app = express();
 let db;
 let genres = [];
+const saltRounds = 10;
 
 function throwError(msg) {
     throw { success: false, msg };
@@ -22,6 +26,77 @@ async function idExists(db, tableName, ID_key, ID) {
         throw err;
     }
 }
+
+const sendMail = (name, email, token) => {
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PASSWORD,
+        },
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "AnimeHub Account Verification",
+        html: `
+          <html>
+            <head>
+              <style>
+                /* Add CSS styles for better email formatting */
+                body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f4f4f4;
+                  text-align: center;
+                }
+                .container {
+                  max-width: 600px;
+                  margin: 0 auto;
+                  padding: 20px;
+                  background-color: #fff;
+                  border-radius: 10px;
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+                h1 {
+                  color: #333;
+                }
+                p {
+                  font-size: 16px;
+                }
+                a {
+                  display: inline-block;
+                  padding: 10px 20px;
+                  margin: 20px 0;
+                  background-color: #007BFF;
+                  color: #fff !important;
+                  text-decoration: none;
+                  border-radius: 5px;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <h1>Hello ${name},</h1>
+                <p>Thank you for signing up with AnimeHub! To get started, please verify your email by clicking the button below:</p>
+                <a href="${process.env.BACKEND}/verify/${token}">Verify Your Email</a>
+                <p>If the button above doesn't work, you can also copy and paste the following link into your web browser:</p>
+                <p><a href="${process.env.BACKEND}/verify/${token}">${process.env.BACKEND}/verify/${token}</a></p>
+                <p>If you didn't sign up for an AnimeHub account, please disregard this email.</p>
+              </div>
+            </body>
+          </html>
+        `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error("Error sending email: " + error);
+        } else {
+            console.log("Email sent: " + info.response);
+        }
+    });
+};
 
 app.use(cors());
 // app.use(morgan());
@@ -57,17 +132,21 @@ app.use((req, res, next) => {
 app.post("/signup", async (req, res, next) => {
     try {
         console.log(req.body);
-        const sql = "INSERT INTO user(name,email,password_hash,created_at,is_admin) VALUES (?,?,?,curdate(),0)";
-        const values = [req.body.name, req.body.email, req.body.password];
+        const emailToken = crypto.randomBytes(64).toString("hex");
+        const hashToken = await bcrypt.hash(req.body.password, saltRounds);
+        console.log("Hash: ", hashToken);
+        const sql = "INSERT INTO user(name,email,password_hash,created_at,is_admin,is_verified,emailToken) VALUES (?,?,?,curdate(),0,0,?)";
+        const values = [req.body.name, req.body.email, hashToken, emailToken];
         const [result] = await db.query(sql, values, (err, data) => {
             if (err) {
                 return res.json(err);
             }
             return res.json(data);
         });
+        sendMail(req.body.name, req.body.email, emailToken);
         return res.json({ success: true, msg: `${req.body.name} added` });
     } catch (err) {
-        if ((err.code = "ER_DUP_ENTRY")) {
+        if (err.code === "ER_DUP_ENTRY") {
             return res.json({ success: false, msg: "User already exists" });
         } else {
             next(err);
@@ -75,20 +154,53 @@ app.post("/signup", async (req, res, next) => {
     }
 });
 
+//verify user api
+app.get("/verify/:token", async (req, res) => {
+    console.log(req.params);
+    const { token } = req.params;
+    try {
+        const sql = "SELECT user_id,`name`,email,created_at,is_verified,emailToken FROM user WHERE emailToken = ?";
+        let data = (await db.query(sql, [token]))[0];
+        if (data.length) {
+            console.log(data);
+            const userId = data[0].user_id;
+            const updateSql = "UPDATE user SET is_verified = 1 WHERE user_id = ?";
+            await db.query(updateSql, [userId]);
+
+            // Redirect to the login page (adjust the URL as needed)
+            return res.redirect(`${process.env.FRONTEND}/login`);
+        } else throw "Invalid token";
+    } catch (error) {
+        next(error);
+    }
+});
+
 // login api
 app.post(
     "/login",
-    [
-        check("email", "Email length error").isEmail().isLength({ min: 10, max: 30 }),
-        check("password", "password length 8-10").isLength({ min: 8 }),
-    ],
+    [check("email", "Email length error").isEmail().isLength({ min: 10, max: 30 }), check("password", "password length 8-10").isLength({ min: 8 })],
     async (req, res, next) => {
         console.log(req.body);
         try {
-            const sql = "SELECT user_id,`name`,email,created_at FROM user WHERE email = ? AND password_hash = ?";
-            let data = (await db.query(sql, [req.body.email, req.body.password]))[0];
-            if (data.length) return res.json({ success: true, data: data[0] });
-            else throw "Invalid Credentials";
+            const sql = "SELECT user_id, `name`, email, password_hash, created_at, is_verified FROM user WHERE email = ?";
+            const [data] = await db.query(sql, [req.body.email]);
+
+            if (data.length > 0) {
+                const user = data[0];
+
+                // Compare the provided password with the stored hash
+                const valid = await bcrypt.compare(req.body.password, user.password_hash);
+
+                if (valid) {
+                    if (user.is_verified) {
+                        return res.json({ success: true, data: user });
+                    } else {
+                        return res.json({ success: false, msg: "Please verify your email before logging in." });
+                    }
+                } else throw "Invalid password";
+            } else {
+                throw "Invalid Credentials";
+            }
         } catch (err) {
             next(err);
         }
@@ -221,9 +333,7 @@ app.get("/anime/:anime_id", async (req, res, next) => {
     anime_id = parseInt(anime_id);
     try {
         let anime = (await db.query("SELECT * FROM anime WHERE anime_id=?", [anime_id]))[0][0];
-        let genres = (await db.query("SELECT label FROM anime_genre WHERE anime_id = ?", [anime_id]))[0].map(
-            (tuple) => tuple.label
-        );
+        let genres = (await db.query("SELECT label FROM anime_genre WHERE anime_id = ?", [anime_id]))[0].map((tuple) => tuple.label);
         let characters = (
             await db.query(
                 "SELECT * FROM anime_character_junction INNER JOIN `character` ON anime_character_junction.character_id=`character`.character_id WHERE anime_character_junction.anime_id=?",
@@ -261,26 +371,30 @@ app.get("/user/:user_id/list", async (req, res, next) => {
     let { user_id } = req.params;
     try {
         let [result] = await db.query(
-            "SELECT list_item.`type` AS `status`,list_item.anime_id AS anime_id,list_item.anime_id AS is_added,title,alt_title,img_link,num_episodes,rating,anime.`type`,`status`,season,score,`rank` FROM list_item INNER JOIN anime ON list_item.anime_id=anime.anime_id where list_item.user_id=?",
+            "SELECT list_item.`type` AS `status`, list_item.anime_id AS anime_id, list_item.anime_id AS is_added, title, alt_title, img_link, num_episodes, rating, anime.`type`, `status`, season, score, `rank`, list_item.`type` AS list_type FROM list_item INNER JOIN anime ON list_item.anime_id=anime.anime_id WHERE list_item.user_id=?",
             [user_id]
         );
+
         // for (let i = 0; i < result.length; i++) {
         //     let genres = (
         //         await db.query("SELECT label FROM anime_genre WHERE anime_id=?", [result[i].anime_id])
         //     )[0].map((tuple) => tuple.label);
         //     result[i].genres = genres;
         // }
-        // console.log(result);
+        //console.log(result);
+
         if (result) {
             return res.json({ success: true, data: result });
         } else {
-            throw { success: false, msg: "Error in fetching data from database." };
+            throw { success: false, msg: "Error in fetching data from the database." };
         }
     } catch (err) {
         err.route = req.route;
         next(err);
     }
 });
+
+
 
 app.get("");
 
@@ -329,11 +443,7 @@ app.post("/user/:user_id/list/update", async (req, res, next) => {
         if (!(await db.query("SELECT * FROM list_item WHERE anime_id=? AND user_id=?", [anime_id, user_id]))[0].length)
             throwError("Anime is not added to watchlist");
 
-        await db.query("UPDATE list_item SET `type`= ? WHERE user_id = ? AND anime_id = ? ", [
-            item_status,
-            user_id,
-            anime_id,
-        ]);
+        await db.query("UPDATE list_item SET `type`= ? WHERE user_id = ? AND anime_id = ? ", [item_status, user_id, anime_id]);
 
         return res.json({ success: true });
     } catch (err) {
@@ -374,6 +484,23 @@ app.delete("/user/:user_id/list/:anime_id/delete", async (req, res, next) => {
         }
         next(err);
     }
+});
+
+//check which animes are in my watchlist
+app.get('/user/:user_id/list/check/:anime_id', (req, res) => {
+    const { user_id, anime_id } = req.params;
+
+    const query = 'SELECT COUNT(*) AS count FROM list_item WHERE user_id = ? AND anime_id = ?';
+    db.query(query, [user_id, anime_id], (error, results) => {
+        if (error) {
+            console.error('Error checking bookmark:', error);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+
+        const isBookmarked = results[0].count > 0;
+        res.json({ isBookmarked });
+    });
 });
 
 // generic error handler

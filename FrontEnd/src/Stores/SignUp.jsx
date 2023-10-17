@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import Validation from "./SignupValidation";
-
 import axios from "axios";
 import config from "../config";
+import backgroundImage from "../assets/images/bg-img.jpg";
 
 function Signup() {
   const [values, setValues] = useState({
@@ -18,7 +16,7 @@ function Signup() {
   const handleInput = (event) => {
     setValues((prev) => ({
       ...prev,
-      [event.target.name]: [event.target.value],
+      [event.target.name]: event.target.value,
     }));
   };
   const handleSubmit = (event) => {
@@ -36,74 +34,101 @@ function Signup() {
   };
   return (
     <div
-      className="border-2 border-white/30 p-5 bg-[#757575] flex justify-center items-center gap-5 h-96 rounded-2xl cursor-pointer "
-    //   onClick={GoogleLogin}
+      className="flex justify-center items-center h-screen bg-gray-900"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <div className="d-flex justify-content-center align-items-center bg-primary vh-100 h-96 bg-[#757575]">
-        <div className="p-3 rounded w-25 first-letter:h-90 bg-[#757575] ">
-          <h2 className="p-5 text-2xl text-center font-bold">Sign-Up</h2>
-          <form action="" onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="name">
-                <strong>Name</strong>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Name"
-                name="name"
-                onChange={handleInput}
-                className="form-control rounded-0 mx-2 ml-8 py-1 px-3 bg-white text-black font-semibold rounded-xl hover:border-blue-600"
-              />
-              {errors.name && (
-                <span className="text-danger"> {errors.name}</span>
-              )}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email">
-                <strong>Email</strong>
-              </label>
-              <input
-                type="email"
-                placeholder="Enter Email"
-                name="email"
-                onChange={handleInput}
-                className="form-control rounded-0 mx-2 py-1 ml-9 px-3 bg-white text-black font-semibold rounded-xl hover:border-blue-600"
-              />
-              {errors.email && (
-                <span className="text-danger"> {errors.email}</span>
-              )}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password">
-                <strong>Password</strong>
-              </label>
-              <input
-                type="password"
-                placeholder="Enter Password"
-                name="password"
-                onChange={handleInput}
-                className="form-control rounded-0 mx-2 py-1 px-3 ml-2 bg-white text-black font-semibold rounded-xl hover:border-blue-600"
-              />
-              {errors.password && (
-                <span className="text-danger"> {errors.password}</span>
-              )}
-            </div>
+      <div className="backdrop-blur-md bg-opacity-25 bg-blue-200/30 p-8 rounded-xl shadow-md w-96">
+        <h2 className="text-3xl font-bold mb-5 text-center">
+          Sign Up
+        </h2>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="w-54 text-gray-800">
+            <label
+              htmlFor="name"
+              className="cursor-text block text-md font-semibold mb-1 rounded-xl"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter name"
+              onChange={handleInput}
+              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${
+                errors.name ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.name && (
+              <span className="text-red-500 text-sm">{errors.name}</span>
+            )}
+          </div>
+
+          <div className="w-54 mt-4 text-gray-800">
+            <label
+              htmlFor="email"
+              className="cursor-text block text-md font-semibold mb-1 rounded-xl"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter email address"
+              onChange={handleInput}
+              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.email && (
+              <span className="text-red-500 text-sm">{errors.email}</span>
+            )}
+          </div>
+
+          <div className="w-54 mt-4 mb-5 text-gray-800">
+            <label
+              htmlFor="password"
+              className="cursor-text block text-md font-semibold mb-1 rounded-xl"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              onChange={handleInput}
+              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.password && (
+              <span className="text-red-500 text-sm">{errors.password}</span>
+            )}
+          </div>
+          <div className="flex justify-center">
             <button
               type="submit"
-              className="btn btn-success w-100 rounded-0 py-2 px-7 m-5 bg-teal-400 text-black font-semibold rounded-xl"
+              className="bg-rose-600 text-white px-4 py-2 mr-4 rounded-md hover:bg-rose-800 transition duration-300"
             >
-              {" "}
-              Sign up
+              Submit
             </button>
-            <Link
-              to="/"
-              className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none py-2 px-7 mt-10 bg-teal-400 text-black font-semibold rounded-xl"
+
+            <button
+              onClick={() => {
+                navigate("/");
+              }}
+              className="bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-800 transition duration-300"
             >
-              Login
-            </Link>
-            <p>You are agree to aour terms and policies</p>
-          </form>
-        </div>
+              Log in
+            </button>
+          </div>
+          <p className="text-xs mt-5 text-black text-center">
+            You agree to our terms and policies
+          </p>
+        </form>
       </div>
     </div>
   );

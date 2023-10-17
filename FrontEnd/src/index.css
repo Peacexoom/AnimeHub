@@ -25,6 +25,16 @@ body{
     /* border: 1px solid white; */
 }
 
+/* Apply transition effect to all buttons */
+button {
+    transition: background-color 0.3s ease;
+}
+
+/* Change background color on hover for all buttons */
+button:hover {
+    background-color: #4a5568;
+}
+
 
 /* loader */
 
