@@ -337,8 +337,6 @@ async function main(db) {
         }
     });
 
-    app.get("");
-
     // add anime to watchlist
     app.post("/user/:user_id/list/add", async (req, res, next) => {
         try {
