@@ -72,31 +72,67 @@ button:hover {
 }
   }
   
-
-  /* CSS for confirm button */
-.btna-success {
-  background-color: #28a745; /* Adjust background color for success button */
-  color: #fff; /* Text color for success button */
-  border: 2px solid #28a745; /* Border for success button */
-  padding: 10px 20px; /* Padding for success button */
-  border-radius: 5px; /* Border radius for success button */
+  /* Dark Mode Styles for SweetAlert2 */
+.swal2-popup {
+  background-color: #19191a;
+  color: #e1e1e1;
 }
 
-.btna-success:hover {
-  background-color: #218838; /* Hover background color for success button */
-  border: 2px solid #218838; /* Hover border for success button */
+.swal2-title {
+  color: #e1e1e1;
 }
 
-/* CSS for cancel button */
-.btna-danger {
-  background-color: #dc3545; /* Adjust background color for danger (cancel) button */
-  color: #fff; /* Text color for danger (cancel) button */
-  border: 2px solid #dc3545; /* Border for danger (cancel) button */
-  padding: 10px 20px; /* Padding for danger (cancel) button */
-  border-radius: 5px; /* Border radius for danger (cancel) button */
+.swal2-content {
+  color: #e1e1e1;
 }
 
-.btna-danger:hover {
-  background-color: #c82333; /* Hover background color for danger (cancel) button */
-  border: 2px solid #c82333; /* Hover border for danger (cancel) button */
+.swal2-actions {
+  color: #e1e1e1;
+}
+
+.swal2-confirm {
+  padding: 8px;
+  margin-left: 10px;
+  border-radius: 7px;
+  background-color: #28a745;
+  border-color: #28a745;
+  color: #fff;
+}
+
+.swal2-cancel {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 7px;
+
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.swal2-icon {
+  background-color: #19191a;
+  color: #e1e1e1;
+}
+
+.swal2-input {
+  color: #e1e1e1;
+  background-color: #282828;
+}
+
+.swal2-validation-message {
+  color: #e1e1e1;
+  background-color: #282828;
+}
+
+.swal2-progresssteps {
+  background-color: #282828;
+}
+
+.swal2-progress-step {
+  background-color: #444;
+  border-color: #555;
+}
+
+.swal2-timer-progress-bar {
+  background: rgba(225, 225, 225, 0.6);
 }

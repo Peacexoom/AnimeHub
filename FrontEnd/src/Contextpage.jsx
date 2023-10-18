@@ -1,7 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import config from "./config";
 import axios from "axios";
-import "./index.css"
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css'; // SweetAlert2 styles
+import './index.scss'; // Include your dark mode CSS
 //=== google firebase import start ===
 // import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 // import { auth } from '../firebase';
@@ -145,14 +147,7 @@ export function AnimeProvider({ children }) {
     setHeader("Your WatchList");
   }
 
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: 'btn btn-success',
-      cancelButton: 'btn btn-danger'
-    },
-    buttonsStyling: false
-  });
-  
+
   const swalWithCustomButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
@@ -172,6 +167,9 @@ export function AnimeProvider({ children }) {
         cancelButtonClass: 'btna-danger', // Adjust class for cancel button
         confirmButtonText: 'Yes, logout',
         cancelButtonText: 'No, cancel',
+        customClass: {
+          container: 'dark-mode', // Apply dark mode class
+        },
         reverseButtons: true
       })
       .then((result) => {
@@ -198,6 +196,7 @@ export function AnimeProvider({ children }) {
       });
   };
 
+  
 
   //<========= firebase Google Authentication ========>
   // const googleProvider = new GoogleAuthProvider();// =====> google auth provide
