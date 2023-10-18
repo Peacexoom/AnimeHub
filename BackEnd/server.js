@@ -17,5 +17,5 @@ async function main() {
 
 (async (callback) => {
   await require("./db.js").connectToDB();
-  await main();
+  await callback();
 })(main);
