@@ -12,7 +12,6 @@ async function main(db) {
     const nodemailer = require("nodemailer");
     const bcrypt = require("bcrypt");
     const emailTemplates = require("./emailTemplates/index.js");
-    // const morgan = require("morgan");
     const { check, validationResult } = require("express-validator");
     const port = 5000;
     const app = express();
@@ -63,7 +62,6 @@ async function main(db) {
     };
 
     app.use(cors());
-    // app.use(morgan());
     app.use((req, res, next) => {
         console.log(req.ip, "- ", req.url);
         next();
@@ -327,14 +325,6 @@ async function main(db) {
                 "SELECT list_item.`type` AS `status`, list_item.anime_id AS anime_id, list_item.anime_id AS is_added, title, alt_title, img_link, num_episodes, rating, anime.`type`, `status`, season, score, `rank`, list_item.`type` AS list_type FROM list_item INNER JOIN anime ON list_item.anime_id=anime.anime_id WHERE list_item.user_id=?",
                 [user_id]
             );
-
-            // for (let i = 0; i < result.length; i++) {
-            //     let genres = (
-            //         await db.query("SELECT label FROM anime_genre WHERE anime_id=?", [result[i].anime_id])
-            //     )[0].map((tuple) => tuple.label);
-            //     result[i].genres = genres;
-            // }
-            //console.log(result);
 
             if (result) {
                 return res.json({ success: true, data: result });
