@@ -1,50 +1,7 @@
-.button-style {
-    background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
-    border: 0;
-    border-radius: 12px;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: inline-block;
-    font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 2.5;
-    outline: transparent;
-    padding: 0 1rem;
-    text-align: center;
-    text-decoration: none;
-    transition: box-shadow 0.2s ease-in-out;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    white-space: nowrap;
-  }
-  
-  .button-style:not([disabled]):focus {
-    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-      -0.125rem -0.125rem 1rem rgba(239, 71, 101, 0.5),
-      0.125rem 0.125rem 1rem rgba(255, 154, 90, 0.5);
-  }
-  
-  .button-style:not([disabled]):hover {
-    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-      -0.125rem -0.125rem 1rem rgba(239, 71, 101, 0.5),
-      0.125rem 0.125rem 1rem rgba(0, 0, 0, 0.5);
-  }
-  
-  .button-style.bg-gradient-purple {
-    /* /* background: linear-gradient(to bottom, #602b74, #a235a4); */
-    /* background: linear-gradient(to bottom, #ff6d70, #ffab80); */
-    /* background: linear-gradient(to bottom, #00b09b, #96c93d); */
-    background: linear-gradient(to bottom, #593a3a, #f21b1b);
+.zoom-in {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Add a smooth transition with cubic-bezier timing function */
+}
 
-
-
-
-/* Purple-ish gradient */
-  }
-  .button-style.bg-gradient-purple:hover {
-    transform: scale(1.05);
-    transition: transform 0.2s ease-in-out; /* Added transition for a smooth effect */
-  }
-  
+.zoom-in:hover {
+  transform: scale(0.95); /* Zoom in by 10% when hovering */
+}

@@ -62,9 +62,12 @@ function Navbar() {
           <h1 className="text-center">Hi, {user?.name}</h1>
         </div>
 
-        <div className="button-style cursor-pointer bg-gradient-purple flex justify-center items-center rounded-xl mt-3" onClick={logout}>
+        
+        <div className="cursor-pointer bg-red-500 flex justify-center items-center p-2 rounded-xl mt-2 zoom-in" onClick={logout}>
   <h1>Logout</h1>
 </div>
+
+
 
       </>
     ) : (
