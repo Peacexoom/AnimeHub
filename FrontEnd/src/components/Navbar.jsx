@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Contextpage from '../Contextpage';
 import { motion } from "framer-motion";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
+import './Navbar.css'
 // import User from '../assets/images/User.jpg';   
 // import { auth } from '../../firebase';
 // import { toast } from "react-toastify";
@@ -59,9 +60,12 @@ function Navbar() {
                             <h1 className="text-center">Hi, {user?.name}</h1>
                         </div>
 
-                        <div className="cursor-pointer bg-red-500 flex justify-center items-center p-2 rounded-xl mt-2" onClick={logout}>
-                            <h1>Logout</h1>
-                        </div>
+                        <div className="cursor-pointer bg-red-500 flex justify-center items-center p-2 rounded-xl mt-2 zoom-in" onClick={logout}>
+  <h1>Logout</h1>
+</div>
+
+
+{/* onClick="toggleScale(this)" */}
                     </>
                         :
                         <>

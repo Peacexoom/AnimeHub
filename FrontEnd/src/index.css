@@ -72,3 +72,67 @@ button:hover {
 }
   }
   
+  /* Dark Mode Styles for SweetAlert2 */
+.swal2-popup {
+  background-color: #19191a;
+  color: #e1e1e1;
+}
+
+.swal2-title {
+  color: #e1e1e1;
+}
+
+.swal2-content {
+  color: #e1e1e1;
+}
+
+.swal2-actions {
+  color: #e1e1e1;
+}
+
+.swal2-confirm {
+  padding: 8px;
+  margin-left: 10px;
+  border-radius: 7px;
+  background-color: #28a745;
+  border-color: #28a745;
+  color: #fff;
+}
+
+.swal2-cancel {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 7px;
+
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.swal2-icon {
+  background-color: #19191a;
+  color: #e1e1e1;
+}
+
+.swal2-input {
+  color: #e1e1e1;
+  background-color: #282828;
+}
+
+.swal2-validation-message {
+  color: #e1e1e1;
+  background-color: #282828;
+}
+
+.swal2-progresssteps {
+  background-color: #282828;
+}
+
+.swal2-progress-step {
+  background-color: #444;
+  border-color: #555;
+}
+
+.swal2-timer-progress-bar {
+  background: rgba(225, 225, 225, 0.6);
+}
