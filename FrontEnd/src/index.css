@@ -26,12 +26,12 @@ body{
 }
 
 /* Apply transition effect to all buttons */
-button {
+button, .btn-link {
     transition: background-color 0.3s ease;
 }
 
 /* Change background color on hover for all buttons */
-button:hover {
+button:hover, .btn-link:hover {
     background-color: #4a5568;
 }
 

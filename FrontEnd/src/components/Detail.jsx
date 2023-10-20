@@ -135,14 +135,14 @@ export const Detail = () => {
                             <div className='w-1/4 h-full relative flex flex-col items-center'>
                                 <img src={animedet.img_link} className='' alt={animedet.title} />
                                 <button
-                                    className="px-4 py-2 text-white bg-slate-800 rounded-full mb-2 flex items-center mt-4"
+                                    className="px-8 py-2 text-white bg-slate-800 rounded-full mb-2 flex items-center mt-4"
                                     onClick={() => setShowOptions(!showOptions)}
                                 >
                                     {isBookmarked ? <AiFillStar /> : <AiOutlineStar />}
                                     Add to bookmark
                                 </button>
                                 {showOptions ? (
-                                    <div className="mt-2 w-48 text-black rounded-lg shadow-lg z-20 flex flex-col items-center">
+                                    <div className="mt-2 w-48 text-black rounded-lg shadow-lg z-20 flex flex-col items-left">
                                         <button
                                             className="px-4 py-2 text-white bg-slate-800 rounded-full mb-2"
                                             onClick={() => BookmarkAnime('COMPLETED', false)}
@@ -185,10 +185,10 @@ export const Detail = () => {
 
                                 </div>
                                 {/* tag */}
-                                <div className='flex justify-center flex-wrap'>
+                                <div className='flex justify-left flex-wrap'>
                                     {animedet.genres.map((genreLabel, index) => (
                                         <>
-                                            <Link to="/genres" key={index} onClick={() => setActiveGenre(genreLabel)}  className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2'>{genreLabel}</Link>
+                                            <Link to="/genres" key={index} onClick={() => setActiveGenre(genreLabel)}  className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2 btn-link'>{genreLabel}</Link>
                                         </>
                                     ))}
                                 </div>
