@@ -57,7 +57,7 @@ router.get("/:section/:limit", async (req, res, next) => {
     } else {
       return res
         .status(404)
-        .send({ success: false, msg: "Error! Unknown section requested" });
+        .send({ success: false, msg: "Error! Unknown section requested!!" });
     }
   } catch (err) {
     next(err);
