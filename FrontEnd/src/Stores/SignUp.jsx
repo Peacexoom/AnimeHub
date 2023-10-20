@@ -110,19 +110,19 @@ function Signup() {
           </div>
           <div className="flex justify-center">
             <button
-              type="submit"
-              className="bg-rose-600 text-white px-4 py-2 mr-4 rounded-md hover:bg-rose-800 transition duration-300"
-            >
-              Submit
-            </button>
-
-            <button
               onClick={() => {
                 navigate("/");
               }}
-              className="bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-800 transition duration-300"
-            >
+              className="bg-rose-600 text-white px-4 py-2 mr-4 rounded-md hover:bg-rose-800 transition duration-300"
+              >
               Log in
+            </button>
+
+            <button
+              className="bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-800 transition duration-300"
+              type="submit"
+            >
+              Register
             </button>
           </div>
           <p className="text-xs mt-5 text-black text-center">
