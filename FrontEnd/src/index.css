@@ -22,7 +22,6 @@ body{
 .active{
     background-color: white;
     color: black;
-    /* border: 1px solid white; */
 }
 
 /* Apply transition effect to all buttons */
