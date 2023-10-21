@@ -116,21 +116,21 @@ const LogInFrom = () => {
 
           <div className="flex justify-center">
             <button
-              type="submit"
-              className="bg-rose-600 text-white px-4 py-2 mr-4 rounded-md hover:bg-rose-900 transition duration-300"
-            >
-              Log in
-            </button>
-
-            <button
               onClick={() => {
                 // Add any additional logic you want to execute on button click
                 // For example, navigating to the signup page
                 navigate("/signup");
               }}
+              className="bg-rose-600 text-white px-4 py-2 mr-4 rounded-md hover:bg-rose-900 transition duration-300"
+              >
+              Sign Up
+            </button>
+
+            <button
+              type="submit"
               className="bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-900 transition duration-300"
             >
-              Sign Up
+              Log in
             </button>
           </div>
 
