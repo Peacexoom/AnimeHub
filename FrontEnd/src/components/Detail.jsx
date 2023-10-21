@@ -188,7 +188,7 @@ export const Detail = () => {
                                 <div className='flex justify-left flex-wrap'>
                                     {animedet.genres.map((genreLabel, index) => (
                                         <>
-                                            <Link to="/genres" key={index} onClick={() => setActiveGenre(genreLabel)}  className='text-white font-semibold bg-gray-800 rounded-full px-4 py-1 m-2 btn-link'>{genreLabel}</Link>
+                                            <Link to="/genres" key={index} onClick={() => setActiveGenre(genreLabel)}  className='text-white font-semibold bg-gray-800 rounded-full px-4 py-2 m-2 btn-link'>{genreLabel}</Link>
                                         </>
                                     ))}
                                 </div>
