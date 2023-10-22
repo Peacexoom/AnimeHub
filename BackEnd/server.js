@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { connectToDB, closeConnection } = require('./db');
 
 // constants
 const PORT = 5000;
@@ -10,12 +11,28 @@ global.throwError = (msg) => {
 
 async function main() {
   const app = require("./app.js");
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log("Server running on port", PORT);
+  });
+
+  process.on('SIGTERM', () => {
+    console.log('SIGTERM signal received: closing HTTP server');
+    server.close(() => {
+      console.log('SIGTERM close server');
+    });
+    closeConnection();
+  });
+
+  process.on('SIGINT', () => {
+    console.log('SIGINT signal received: closing HTTP server');
+    server.close(() => {
+      console.log('SIGINT close server');
+    });
+    closeConnection();
   });
 }
 
 (async (callback) => {
-  await require("./db.js").connectToDB();
+  await connectToDB();
   await callback();
 })(main);
