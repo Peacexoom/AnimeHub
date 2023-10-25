@@ -16,6 +16,11 @@ app.use("/anime", require("./api/animeRouter.js"));
 app.use("/genres", require("./api/genreRouter.js"));
 app.use("/user", require("./api/userRouter.js"));
 
+//Handle unhandled routes
+app.all('*', (req,res,next)=>{
+  next(`${req.originalUrl} route not found`)
+})
+
 // generic error handler
 app.use(require("./middlewares/errorHandler.js"));
 
