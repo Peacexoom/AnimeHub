@@ -1,17 +1,26 @@
 require("dotenv").config();
 const { connectToDB, closeConnection } = require('./db');
 
+//Handling uncaught exception 
+process.on('uncaughtException', err =>{
+  console.log(`Error: ${err.message}`);
+  console.log('Shutting down due to uncaught exception');
+  process.exit(1)
+})
+
 // constants
 const PORT = 5000;
 
-// attah globals
+// attach globals
 global.throwError = (msg) => {
   throw { success: false, msg };
 };
 
+let server;
+
 async function main() {
-  const app = require("./app.js");
-  const server = app.listen(PORT, () => {
+    const app = require("./app.js");
+    server = app.listen(PORT, () => {
     console.log("Server running on port", PORT);
   });
 
@@ -35,4 +44,17 @@ async function main() {
 (async (callback) => {
   await connectToDB();
   await callback();
-})(main);
+})(main)
+
+//Handling unhandled server errors
+process.on("unhandledRejection", (err) => {
+  console.log(`Error: ${err.message}`)
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...')
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  } else {
+    process.exit(1);
+  }
+})
