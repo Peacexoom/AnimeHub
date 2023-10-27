@@ -196,6 +196,24 @@ export function AnimeProvider({ children }) {
       });
   };
 
+
+  const loginsuccess = () => {
+    swalWithCustomButtons
+      .fire({
+        title: 'Login Success',
+        text: 'You have been successfully logged in.',
+        icon: 'success',
+        confirmButtonClass: 'btna-success m-4', // Adjust class for confirm button
+        confirmButtonText: 'OK',
+        customClass: {
+          container: 'dark-mode', // Apply dark mode class
+        },
+      })
+      
+      // });
+  };
+  
+
   
 
   //<========= firebase Google Authentication ========>
@@ -220,6 +238,7 @@ export function AnimeProvider({ children }) {
         setUser,
         isLoggedIn,
         setIsLoggedIn,
+        loginsuccess,
         genreAnimes,
         logout,
         fetchGenre,
