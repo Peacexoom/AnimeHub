@@ -26,3 +26,8 @@ exports.idExists = async (db, tableName, ID_key, ID) => {
     throw err;
   }
 };
+
+exports.closeConnection = async () => {
+  await db.end();
+  console.log("DB Connection Closed");
+}

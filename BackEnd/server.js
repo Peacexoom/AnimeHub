@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { connectToDB, closeConnection } = require('./db');
 
 //Handling uncaught exception 
 process.on('uncaughtException', err =>{
@@ -18,14 +19,30 @@ global.throwError = (msg) => {
 let server;
 
 async function main() {
-  const app = require("./app.js");
-  server = app.listen(PORT, () => {
+    const app = require("./app.js");
+    server = app.listen(PORT, () => {
     console.log("Server running on port", PORT);
+  });
+
+  process.on('SIGTERM', () => {
+    console.log('SIGTERM signal received: closing HTTP server');
+    server.close(() => {
+      console.log('SIGTERM close server');
+    });
+    closeConnection();
+  });
+
+  process.on('SIGINT', () => {
+    console.log('SIGINT signal received: closing HTTP server');
+    server.close(() => {
+      console.log('SIGINT close server');
+    });
+    closeConnection();
   });
 }
 
 (async (callback) => {
-  await require("./db.js").connectToDB();
+  await connectToDB();
   await callback();
 })(main)
 
