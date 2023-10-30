@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa"; // Import Google icon from react-icons/fa
 import Validation from "./LoginValidation";
 import config from "../config.js";
 import Contextpage from "../Contextpage";
 import backgroundImage from "../assets/images/bg-img.jpg";
 
-const LogInFrom = () => {
+const LogInForm = () => {
   const { setIsLoggedIn, setUser, loginsuccess } = useContext(Contextpage);
   const [values, setValues] = useState({
     email: "",
@@ -15,6 +16,7 @@ const LogInFrom = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [backendError, setBackendError] = useState([]);
+
   const handleInput = (event) => {
     setValues((prev) => ({
       ...prev,
@@ -35,12 +37,10 @@ const LogInFrom = () => {
         } else {
           setBackendError([]);
           if (res.data.success) {
-            // alert("Login Success");
             loginsuccess();
             localStorage.setItem("user", JSON.stringify(res.data.data));
             setIsLoggedIn(true);
             setUser(res.data.data);
-            
           } else {
             alert(res.data.msg);
           }
@@ -51,7 +51,7 @@ const LogInFrom = () => {
       }
     }
   };
-  const { GoogleLogin } = useContext(Contextpage);
+
   return (
     <div
       className="flex justify-center items-center h-screen bg-gray-900"
@@ -87,8 +87,9 @@ const LogInFrom = () => {
               name="email"
               placeholder="Enter email address"
               onChange={handleInput}
-              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${errors.email ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
             />
             {errors.email && (
               <span className="text-red-500 text-sm">{errors.email}</span>
@@ -97,7 +98,7 @@ const LogInFrom = () => {
 
           <div className="w-54 mt-4 mb-5 text-gray-800">
             <label
-              for="password"
+              htmlFor="password"
               className="cursor-text block text-md font-semibold mb-1"
             >
               Password
@@ -107,23 +108,42 @@ const LogInFrom = () => {
               name="password"
               placeholder="Enter your password"
               onChange={handleInput}
-              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${errors.password ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`bg-blue-100 w-full border px-3 py-2 rounded-md ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              }`}
             />
             {errors.password && (
               <span className="text-red-500 text-sm">{errors.password}</span>
             )}
           </div>
 
+          {/* Forgot Password link */}
+          <div className="flex flex-col items-center mb-4">
+            <div className="text-gray-800 text-sm mb-2">
+              <Link
+                to="/forgot-password"
+                className="text-blue-500 hover:underline"
+              >
+                Forgot Password?
+              </Link>
+            </div>
+
+            <div className="flex items-center">
+              <button className="bg-rose-600 text-white px-4 py-2 mr-2 rounded-md hover:bg-rose-900 transition duration-300">
+                <div className="flex items-center">
+                  <FaGoogle className="mr-2" /> Login with Google
+                </div>
+              </button>
+            </div>
+          </div>
+
           <div className="flex justify-center">
             <button
               onClick={() => {
-                // Add any additional logic you want to execute on button click
-                // For example, navigating to the signup page
                 navigate("/signup");
               }}
               className="bg-rose-600 text-white px-4 py-2 mr-4 rounded-md hover:bg-rose-900 transition duration-300"
-              >
+            >
               Sign Up
             </button>
 
@@ -139,13 +159,9 @@ const LogInFrom = () => {
             You agree to our terms and policies
           </p>
         </form>
-
-        <div className="flex items-center mt-">
-          {/* Add your Google login button or icon here */}
-        </div>
       </div>
     </div>
   );
 };
 
-export default LogInFrom;
+export default LogInForm;

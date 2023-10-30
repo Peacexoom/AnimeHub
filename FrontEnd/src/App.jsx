@@ -17,6 +17,7 @@ import Signup from "./Stores/SignUp";
 import LogInForm from "./Stores/LogInForm";
 import Searchbar from "./components/Searchbar";
 import Animes from "./components/Anime";
+import ForgotPasswordForm from "./pages/ForgotPassword";
 
 function App() {
   const { isLoggedIn } = useContext(Contextpage);
@@ -27,6 +28,7 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<LogInForm />} />
         <Route path="*" element={<LogInForm />} />
+        <Route path="forgot-password" element={<ForgotPasswordForm />} />
       </Routes>
     );
   } else {
@@ -58,10 +60,7 @@ function App() {
             <Route path="animedetail/:anime_id" element={<Detail />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="search" element={<SearchResults />} />
-            <Route
-              path="login"
-              element={<Navigate replace to="/trending" />}
-            />
+            <Route path="login" element={<Navigate replace to="/trending" />} />
             <Route
               path="signup"
               element={<Navigate replace to="/trending" />}
