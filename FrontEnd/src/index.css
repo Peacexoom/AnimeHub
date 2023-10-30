@@ -19,18 +19,19 @@ body{
   box-shadow: inset 0px -90px 30px 0px #0000008c;
 }
 
-.img{
-    transition: 0.5s ease-in-out;
-}
-
-.card:hover .img{
-    transform: scale(1.1);
-}
-
 .active{
     background-color: white;
     color: black;
-    /* border: 1px solid white; */
+}
+
+/* Apply transition effect to all buttons */
+button, .btn-link {
+    transition: background-color 0.3s ease;
+}
+
+/* Change background color on hover for all buttons */
+button:hover, .btn-link:hover {
+    background-color: #4a5568;
 }
 
 
@@ -70,3 +71,67 @@ body{
 }
   }
   
+  /* Dark Mode Styles for SweetAlert2 */
+.swal2-popup {
+  background-color: #19191a;
+  color: #e1e1e1;
+}
+
+.swal2-title {
+  color: #e1e1e1;
+}
+
+.swal2-content {
+  color: #e1e1e1;
+}
+
+.swal2-actions {
+  color: #e1e1e1;
+}
+
+.swal2-confirm {
+  padding: 8px;
+  margin-left: 10px;
+  border-radius: 7px;
+  background-color: #28a745;
+  border-color: #28a745;
+  color: #fff;
+}
+
+.swal2-cancel {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 7px;
+
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.swal2-icon {
+  background-color: #19191a;
+  color: #e1e1e1;
+}
+
+.swal2-input {
+  color: #e1e1e1;
+  background-color: #282828;
+}
+
+.swal2-validation-message {
+  color: #e1e1e1;
+  background-color: #282828;
+}
+
+.swal2-progresssteps {
+  background-color: #282828;
+}
+
+.swal2-progress-step {
+  background-color: #444;
+  border-color: #555;
+}
+
+.swal2-timer-progress-bar {
+  background: rgba(225, 225, 225, 0.6);
+}

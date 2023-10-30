@@ -1,22 +1,23 @@
 import React, { useContext } from "react";
 import { Navigate, Route, Routes, Link } from "react-router-dom";
 import { Detail } from "./components/Detail";
-import Navbar from './components/Navbar'
-import Container from './pages/Container'
-import Trending from './pages/Trending';
-import Ongoing from './pages/Ongoing';
-import Toprated from './pages/Toprated';
-import Newest from './pages/Newest';
-import Movies from './pages/Movies';
-import Favorite from './pages/Favoritepage';
+import Navbar from "./components/Navbar";
+import Container from "./pages/Container";
+import Trending from "./pages/Trending";
+import Ongoing from "./pages/Ongoing";
+import Toprated from "./pages/Toprated";
+import Newest from "./pages/Newest";
+import Movies from "./pages/Movies";
+import Favorite from "./pages/Favoritepage";
 import SearchResults from "./pages/SearchResults";
 import Contextpage from "./Contextpage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Signup from './Stores/SignUp';
+import Signup from "./Stores/SignUp";
 import LogInForm from "./Stores/LogInForm";
 import Searchbar from "./components/Searchbar";
 import Animes from "./components/Anime";
+import ForgotPasswordForm from "./pages/ForgotPassword";
 
 function App() {
   const { isLoggedIn } = useContext(Contextpage);
@@ -24,13 +25,13 @@ function App() {
   if (!isLoggedIn) {
     return (
       <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<LogInForm />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="login" element={<LogInForm />} />
         <Route path="*" element={<LogInForm />} />
+        <Route path="forgot-password" element={<ForgotPasswordForm />} />
       </Routes>
-    )
+    );
   } else {
-
     return (
       <>
         <ToastContainer
@@ -49,24 +50,32 @@ function App() {
 
         <div className="md:ml-[15rem]">
           <Routes>
-            <Route path='/' element={<Navigate replace to="/trending" />} />
-            <Route path='/trending' element={<Trending />} />
-            <Route path='/genres' element={<Container />} />
-            <Route path='/ongoing' element={<Ongoing />} />
-            <Route path='/toprated' element={<Toprated />} />
-            <Route path='/newest' element={<Newest />} />
-            <Route path='/movies' element={<Movies />} />
-            <Route path='/animedetail/:anime_id' element={<Detail />} />
-            <Route path="/favorite" element={<Favorite />} />
-            <Route path="/search" element={<SearchResults />} />
-            <Route path='/login' element={<Navigate replace to="/trending" />} />
-            <Route path='/signup' element={<Navigate replace to="/trending" />} />
-            <Route path="*" element={<div className="text-white w-full h-full flex-col flex text-3xl">
-              <div className="m-auto mt-40 mb-10">
-                404 - Page Not Found
-              </div>
-              <Link className="m-auto" to="/trending" >Go to home page</Link>
-            </div>} />
+            <Route path="/" element={<Navigate replace to="/trending" />} />
+            <Route path="trending" element={<Trending />} />
+            <Route path="genres" element={<Container />} />
+            <Route path="ongoing" element={<Ongoing />} />
+            <Route path="toprated" element={<Toprated />} />
+            <Route path="newest" element={<Newest />} />
+            <Route path="movies" element={<Movies />} />
+            <Route path="animedetail/:anime_id" element={<Detail />} />
+            <Route path="favorite" element={<Favorite />} />
+            <Route path="search" element={<SearchResults />} />
+            <Route path="login" element={<Navigate replace to="/trending" />} />
+            <Route
+              path="signup"
+              element={<Navigate replace to="/trending" />}
+            />
+            <Route
+              path="*"
+              element={
+                <div className="text-white w-full h-full flex-col flex text-3xl">
+                  <div className="m-auto mt-40 mb-10">404 - Page Not Found</div>
+                  <Link className="m-auto" to="/trending">
+                    Go to home page
+                  </Link>
+                </div>
+              }
+            />
           </Routes>
         </div>
       </>

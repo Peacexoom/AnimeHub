@@ -1,6 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import config from "./config";
 import axios from "axios";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css'; // SweetAlert2 styles
+import './index.scss'; // Include your dark mode CSS
 //=== google firebase import start ===
 // import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 // import { auth } from '../firebase';
@@ -43,18 +46,18 @@ export function AnimeProvider({ children }) {
     setPage(1);
   }, [header]);
 
-  // const filteredGenre = async () => {
-  // let data = await fetch(
-  //     `${IP}/anime/popular/50`, { headers: { 'user_id': user.user_id } }
-  //   );
+  const filteredGenre = async () => {
+  let data = await fetch(
+      `${IP}/anime/popular/50`, { headers: { 'user_id': user.user_id } }
+    );
 
-  //   const animes = (await data.json()).data;
-  //   setLoader(false);
-  //   setHeader("Genres");
-  // };
+    const animes = (await data.json()).data;
+    setLoader(false);
+    setHeader("Genres");
+  };
 
   const fetchSearch = async (query) => {
-    // setLoader(true);
+    setLoader(true);
     const data = await fetch(
       `${IP}/anime/search?search_query=${query}&limit=${pageSize}&offset=${(page - 1) * pageSize}`, { headers: { 'user_id': user.user_id } }
     );
@@ -144,13 +147,74 @@ export function AnimeProvider({ children }) {
     setHeader("Your WatchList");
   }
 
+
+  const swalWithCustomButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  });
+  
   const logout = () => {
-    if (isLoggedIn) {
-      localStorage.removeItem("user");
-      setIsLoggedIn(false);
-      setUser(0);
-    }
-  }
+    swalWithCustomButtons
+      .fire({
+        title: 'Logout Confirmation',
+        text: 'Are you sure you want to log out?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btna-success m-4', // Adjust class for confirm button
+        cancelButtonClass: 'btna-danger', // Adjust class for cancel button
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'No, cancel',
+        customClass: {
+          container: 'dark-mode', // Apply dark mode class
+        },
+        reverseButtons: true
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          // Perform the logout action
+          if (isLoggedIn) {
+            localStorage.removeItem("user");
+            setIsLoggedIn(false);
+            setUser(0);
+          }
+  
+          swalWithCustomButtons.fire(
+            'Logged Out',
+            'You have been successfully logged out.',
+            'success'
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithCustomButtons.fire(
+            'Cancelled',
+            'You are still logged in.',
+            'error'
+          );
+        }
+      });
+  };
+
+
+  const loginsuccess = () => {
+    swalWithCustomButtons
+      .fire({
+        title: 'Login Success',
+        text: 'You have been successfully logged in.',
+        icon: 'success',
+        confirmButtonClass: 'btna-success m-4', // Adjust class for confirm button
+        confirmButtonText: 'OK',
+        customClass: {
+          container: 'dark-mode', // Apply dark mode class
+        },
+      })
+      
+      // });
+  };
+  
+
+  
 
   //<========= firebase Google Authentication ========>
   // const googleProvider = new GoogleAuthProvider();// =====> google auth provide
@@ -174,6 +238,7 @@ export function AnimeProvider({ children }) {
         setUser,
         isLoggedIn,
         setIsLoggedIn,
+        loginsuccess,
         genreAnimes,
         logout,
         fetchGenre,

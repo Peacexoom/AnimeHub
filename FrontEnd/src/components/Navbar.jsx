@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Contextpage from '../Contextpage';
 import { motion } from "framer-motion";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
+import './Navbar.css'
 // import User from '../assets/images/User.jpg';   
 // import { auth } from '../../firebase';
 // import { toast } from "react-toastify";
@@ -21,7 +22,7 @@ function Navbar() {
                 {activemobile ? <HiX /> : <HiMenuAlt1 />}
             </button>
 
-            <nav className={`${activemobile ? 'block' : 'hidden'} fixed bg-black/90 md:bg-black h-full w-full md:w-[15rem] z-30 md:block`}>
+            <nav className={`${activemobile ? 'block' : 'hidden'} fixed bg-black/90 md:bg-black h-full w-full md:w-[15rem] z-30 md:block overflow-y-scroll scrollbar-thin scrollbar-track-black scrollbar-thumb-blue-900`}>
                 <motion.div
                     animate={{ scale: 1 }}
                     initial={{ scale: 0 }}
@@ -52,16 +53,19 @@ function Navbar() {
 
                 {/* Loginsection */}
 
-                <div className="absolute bottom-0 w-full p-5 md:p-2 text-white">
+                <div className="relative bottom-0 w-full p-5 md:p-2 text-white">
                     {isLoggedIn ? <>
                         <div className="w-full justify-center bg-gray-900 px-5 py-2 gap-4 rounded-xl flex font-semibold border-2 border-blue-100/10">
                             {/* <img src={user?.photoURL == null ? "User" : user?.photoURL} alt="user" className="h-10 rounded-full" /> */}
                             <h1 className="text-center">Hi, {user?.name}</h1>
                         </div>
 
-                        <div className="cursor-pointer bg-red-500 flex justify-center items-center p-2 rounded-xl mt-2" onClick={logout}>
-                            <h1>Logout</h1>
-                        </div>
+                        <div className="cursor-pointer bg-red-500 flex justify-center items-center p-2 rounded-xl mt-2 zoom-in" onClick={logout}>
+  <h1>Logout</h1>
+</div>
+
+
+{/* onClick="toggleScale(this)" */}
                     </>
                         :
                         <>
