@@ -1,7 +1,12 @@
 const express = require("express");
 const app = express();
 
-app.use(require("cors")());
+
+const option={
+  origin:'http://172.16.0.4:5173'
+}
+
+app.use(require("cors")(option));
 // requset logger
 app.use(require("./middlewares/requestLogger.js"));
 app.use(express.json());

@@ -1,5 +1,5 @@
 let config = {
-    host: "http://localhost:5000",
+    host: "http://172.16.0.3:5000",
 };
 
 export default config;

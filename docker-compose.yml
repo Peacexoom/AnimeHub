@@ -1,0 +1,70 @@
+version: '3.7'
+
+services:
+  backend-database:
+    build: ./BackEnd/sql
+    container_name: mysql-database
+    environment:
+        MYSQL_ROOT_PASSWORD: issac
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      backend-database-network:
+        ipv4_address: 172.16.0.2  
+    healthcheck:
+      test: ["CMD", "mysqladmin","ping",'-h',"localhost"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    
+
+  backend:
+    build:
+      context: ./BackEnd
+    
+    environment:
+       DB_HOST: backend-database
+       DB_USER: root
+       DB_PASSWORD: issac
+       DB_DATABASE: anime_hub
+       DB_PORT: 3306
+    ports:
+      - 5000:5000
+    expose:
+      - 5000
+    depends_on:
+       backend-database:
+          condition: service_healthy
+    networks:
+      backend-database-network:
+        ipv4_address: 172.16.0.3 
+    
+
+  frontend:
+     build:  
+      context: ./FrontEnd
+     expose:
+       - 5173
+     depends_on:
+        - backend
+     networks:
+       backend-database-network:
+          ipv4_address: 172.16.0.4
+        
+    
+
+volumes:
+  mysql_data:
+
+networks:
+  backend-database-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.1
+
+  
