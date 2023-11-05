@@ -9,9 +9,7 @@ exports.connectToDB = async () => {
 	  password: process.env.MYSQL_PASSWORD ,
 	  database: process.env.MYSQL_DATABASE ,
 	  port: 3306,	  
-	  // waitForConnections: true,
-	  // connectionLimit: 10,
-	  // queueLimit: 0
+	  
 
   };
   db = await mysql.createConnection(connParam);
